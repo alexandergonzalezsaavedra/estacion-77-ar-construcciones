@@ -100,7 +100,10 @@
               </p>
             </div>
             <div class="col-span-1 md:col-span-4">
-              <div class="intro__content-form">
+              <div
+                class="intro__content-form"
+                id="registro"
+              >
                 <form>
                   <h3 class="intro__form-title">CONOCE ESTACIÓN 77</h3>
                   <fieldset class="intro__fieldset">
@@ -335,7 +338,7 @@
               >
                 <path
                   class="typology-tabs__segment typology-tabs__segment--fixed"
-                  d="M-20,70 L100,70"
+                  d="M-2000,70 L100,70"
                 />
                 <path
                   class="typology-tabs__segment"
@@ -359,7 +362,7 @@
                 />
                 <path
                   class="typology-tabs__segment typology-tabs__segment--fixed"
-                  d="M1120,70 L1240,70"
+                  d="M1120,70 L3200,70"
                 />
               </svg>
 
@@ -477,7 +480,192 @@
           </div>
         </div>
       </section>
+
+      <section class="ubicacion">
+        <div class="container mx-auto py-24">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-x-16 gap-y-12 items-center">
+            <div class="col-span-1 md:col-span-7">
+              <img
+                class="ubicacion__map"
+                src="./img/mapa/mapa-estacion-77.png"
+                alt="Mapa de ubicación Estación 77"
+              />
+            </div>
+
+            <div class="col-span-1 md:col-span-5">
+              <div class="ubicacion__badge">
+                Ubicación
+                <span class="ubicacion__badge-dot"></span>
+              </div>
+
+              <p class="ubicacion__text">
+                <svg
+                  class="ubicacion__arrow"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 6l12 12M18 8v10H8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <span>
+                  Ubicación estratégica
+                  <br />
+                  <strong>cerca al Poblado<br />y al nuevo Davi Arena.</strong>
+                </span>
+              </p>
+
+              <div class="ubicacion__links">
+                <a
+                  class="ubicacion__link"
+                  href="https://waze.com/ul?q=Estaci%C3%B3n%2077%20Ciudad%20Peldar%20Envigado&navigate=yes"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="9"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <circle
+                      cx="9"
+                      cy="10"
+                      r="1.2"
+                      fill="currentColor"
+                    />
+                    <circle
+                      cx="15"
+                      cy="10"
+                      r="1.2"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M8.5 14.5c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  Waze
+                </a>
+                <a
+                  class="ubicacion__link"
+                  href="https://www.google.com/maps/search/?api=1&query=Estaci%C3%B3n%2077%20Ciudad%20Peldar%20Envigado"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 22s7-7.58 7-12.5A7 7 0 0 0 5 9.5C5 14.42 12 22 12 22Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linejoin="round"
+                    />
+                    <circle
+                      cx="12"
+                      cy="9.5"
+                      r="2.5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                  </svg>
+                  Google Maps
+                </a>
+              </div>
+
+              <a
+                class="ubicacion__cta"
+                href="#registro"
+              >
+                <strong>Regístrate</strong> aquí
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
+    <footer class="site-footer">
+      <div class="container mx-auto">
+        <div class="site-footer__brands">
+          <img
+            class="site-footer__ar-logo"
+            src="./img/logo-ar-construcciones-50.png"
+            alt="AR Construcciones - 50 años"
+          />
+
+          <div class="site-footer__estacion-logo">
+            <img
+              src="./img/logo-estacion-77.png"
+              alt="Estación 77"
+            />
+          </div>
+
+          <div class="site-footer__apoya">
+            <span class="site-footer__apoya-label">Apoya:</span>
+            <img
+              src="./img/logo-metro-medellin.png"
+              alt="Negocios Metro de Medellín"
+            />
+          </div>
+        </div>
+
+        <hr class="site-footer__divider" />
+
+        <div class="site-footer__info grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+          <div>
+            <h4 class="site-footer__heading">Contáctanos</h4>
+            <p class="site-footer__text">313 253 92 29 y 313 253 91 93</p>
+            <p class="site-footer__text">MiQuintero@arconstrucciones.com</p>
+          </div>
+          <div>
+            <h4 class="site-footer__heading">Sala de ventas</h4>
+            <p class="site-footer__text">Ciudad Peldar, Sobre la Av. Regional.</p>
+            <p class="site-footer__text">Envigado, Antioquia</p>
+          </div>
+          <div>
+            <h4 class="site-footer__heading">Horario</h4>
+            <p class="site-footer__text">Lunes a sábado: 9:00 a.m. a 5:00 p.m.</p>
+            <p class="site-footer__text">Domingos: 9:00 a.m. a 5:00 p.m.</p>
+          </div>
+        </div>
+
+        <hr class="site-footer__divider" />
+
+        <p class="site-footer__copy">
+          AR Construcciones - Todos los Derechos reservados © 2026
+        </p>
+      </div>
+
+      <div class="site-footer__tags">
+        <div class="site-footer__tags-inner container mx-auto">
+          <span class="site-footer__tag">
+            ESTACIÓN <em>77</em> - CIUDAD PELDAR.
+          </span>
+          <span class="site-footer__tag site-footer__tag--active">
+            <span class="site-footer__tag-dot"></span>
+            Hogar
+          </span>
+          <span class="site-footer__tag">Comercio</span>
+          <span class="site-footer__tag">Movilidad</span>
+        </div>
+      </div>
+    </footer>
     <script src="./js/typology-slider.js"></script>
     <script src="./js/typology-tabs.js"></script>
   </body>
