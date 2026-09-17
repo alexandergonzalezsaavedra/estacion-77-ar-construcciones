@@ -80,8 +80,34 @@ body {
     display: flex;
     align-items: center;
 }
+.hero-window {
+    display: block;
+    width: 112%;
+    margin-left: -6%;
+    will-change: transform;
+    transform-style: preserve-3d;
+}
+.hero-window__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.25));
+}
 .hero-banner__logo-estacion {
     width: 90%;
+    animation: hero-logo-drop 2.4s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+@keyframes hero-logo-drop {
+    0% {
+        opacity: 0;
+        transform: translateY(-110px) scale(0.96);
+        filter: blur(6px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 .hero-banner__h2 {
     font-family: var(--font-led);
@@ -90,6 +116,29 @@ body {
     letter-spacing: 0.06em;
     line-height: 2rem;
     color: #3a3a3a;
+    perspective: 400px;
+}
+.flap-line {
+    display: inline-block;
+}
+.flap-char {
+    display: inline-block;
+    backface-visibility: hidden;
+    transform-origin: 50% 50%;
+}
+.flap-char.is-flipping {
+    animation: flap-flip 0.045s linear;
+}
+@keyframes flap-flip {
+    0% {
+        transform: rotateX(0deg);
+    }
+    50% {
+        transform: rotateX(-90deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
 }
 .hero-banner__link {
     display: inline-block;

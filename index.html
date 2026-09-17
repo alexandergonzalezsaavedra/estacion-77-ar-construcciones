@@ -38,11 +38,45 @@
         <div class="container mx-auto mt-12">
           <div class="grid grid-cols-12 items-center gap-x-12">
             <div class="col-span-5">
-              <img
-                src="./img/slide-principal-stacion-77.png"
-                alt="Estación 77 un proyecto de AR Construcciones"
-                width="100%"
-              />
+              <div
+                class="hero-window"
+                data-hero-window
+              >
+                <svg
+                  class="hero-window__svg"
+                  viewBox="0 0 766.84 506.85"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <clipPath id="heroWindowClip">
+                      <path
+                        d="M484.63,452.01c0,26.61-21.57,48.18-48.18,48.18H73.56c-26.61,0-48.18-21.57-48.18-48.18V54.84
+		c0-26.61,21.57-48.18,48.18-48.18h362.88c26.61,0,48.18,21.57,48.18,48.18V452.01z"
+                      />
+                      <path
+                        d="M741.46,452.01c0,26.61-21.57,48.18-48.18,48.18H591.83c-26.61,0-48.18-21.57-48.18-48.18V155.24h197.82
+		V452.01z"
+                      />
+                      <path
+                        d="M741.46,119.14H543.65V54.84c0-26.61,21.57-48.18,48.18-48.18h101.45c26.61,0,48.18,21.57,48.18,48.18V119.14z"
+                      />
+                    </clipPath>
+                  </defs>
+                  <g clip-path="url(#heroWindowClip)">
+                    <image
+                      class="hero-window__img"
+                      data-hero-window-img
+                      href="./img/hero-bg-window.jpg"
+                      x="-40"
+                      y="-30"
+                      width="846.84"
+                      height="566.85"
+                      preserveAspectRatio="xMidYMid slice"
+                    />
+                  </g>
+                </svg>
+              </div>
             </div>
             <div class="col-span-7 flex flex-col items-center">
               <img
@@ -50,12 +84,27 @@
                 src="./img/logo-estacion-77.png"
                 alt="Logo Estación 77 - AR Construcciones"
               />
-              <h2 class="hero-banner__h2 text-center my-12">
-                Apartamentos en la mejor ubicación
+              <h2
+                class="hero-banner__h2 text-center my-12"
+                data-split-flap
+              >
+                <span
+                  class="flap-line"
+                  data-flap-line
+                  >Apartamentos en la mejor ubicación</span
+                >
                 <br />
-                de ciudad peldar con conexón directa
+                <span
+                  class="flap-line"
+                  data-flap-line
+                  >de ciudad peldar con conexón directa</span
+                >
                 <br />
-                a la estación Envigado del metro.
+                <span
+                  class="flap-line"
+                  data-flap-line
+                  >a la estación Envigado del metro.</span
+                >
               </h2>
               <a
                 class="hero-banner__link"
@@ -652,20 +701,20 @@
         </p>
       </div>
 
-      <div class="site-footer__tags">
-        <div class="site-footer__tags-inner container mx-auto">
-          <span class="site-footer__tag">
-            ESTACIÓN <em>77</em> - CIUDAD PELDAR.
-          </span>
-          <span class="site-footer__tag site-footer__tag--active">
-            <span class="site-footer__tag-dot"></span>
-            Hogar
-          </span>
-          <span class="site-footer__tag">Comercio</span>
-          <span class="site-footer__tag">Movilidad</span>
-        </div>
+      <div class="site-footer__tags container mx-auto">
+        <span class="site-footer__tag">
+          ESTACIÓN <em>77</em> - CIUDAD PELDAR.
+        </span>
+        <span class="site-footer__tag site-footer__tag--active">
+          <span class="site-footer__tag-dot"></span>
+          Hogar
+        </span>
+        <span class="site-footer__tag">Comercio</span>
+        <span class="site-footer__tag">Movilidad</span>
       </div>
     </footer>
+    <script src="./js/hero-window.js"></script>
+    <script src="./js/hero-split-flap.js"></script>
     <script src="./js/typology-slider.js"></script>
     <script src="./js/typology-tabs.js"></script>
   </body>
