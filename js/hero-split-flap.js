@@ -6,9 +6,9 @@
   if (!lines.length) return;
 
   const FLAP_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const STEP_DELAY = 45;
-  const MIN_STEPS = 4;
-  const MAX_STEPS = 9;
+  const STEP_DELAY = 100;
+  const MIN_STEPS = 5;
+  const MAX_STEPS = 10;
 
   function buildChars(line) {
     const text = line.textContent;
@@ -22,11 +22,15 @@
     });
   }
 
-  function runFlap(span, finalChar, delay) {
-    if (span.textContent === finalChar && finalChar === " ") return;
+  function runFlap(span, finalChar, delay, onDone) {
+    if (finalChar === " ") {
+      if (onDone) onDone();
+      return;
+    }
     const steps = MIN_STEPS + Math.floor(Math.random() * (MAX_STEPS - MIN_STEPS));
 
     setTimeout(() => {
+      span.classList.add("is-visible");
       let i = 0;
       function tick() {
         const stepIndex = i;
@@ -39,6 +43,7 @@
           span.textContent = last
             ? finalChar
             : FLAP_CHARS[Math.floor(Math.random() * FLAP_CHARS.length)];
+          if (last && onDone) onDone();
         }, STEP_DELAY / 2);
 
         i++;
@@ -48,21 +53,49 @@
     }, delay);
   }
 
+  // Build the per-character spans up front (hidden via CSS) so the reveal
+  // and the flap sequence can start together once the logo has landed.
+  const lineChars = lines.map(buildChars);
+
+  function revealCta() {
+    const cta = document.querySelector("[data-hero-cta]");
+    if (cta) cta.classList.add("is-visible");
+  }
+
   function play() {
+    let remaining = 0;
+    lineChars.forEach((chars) => {
+      remaining += chars.length;
+    });
+
+    function onCharDone() {
+      remaining--;
+      if (remaining === 0) setTimeout(revealCta, 200);
+    }
+
     let index = 0;
-    lines.forEach((line, lineIndex) => {
-      const chars = buildChars(line);
+    lineChars.forEach((chars, lineIndex) => {
       chars.forEach(({ span, final }) => {
-        const delay = index * 12 + lineIndex * 80;
-        runFlap(span, final, delay);
+        const delay = index * 25 + lineIndex * 120;
+        runFlap(span, final, delay, onCharDone);
         index++;
       });
     });
   }
 
-  if (document.readyState === "complete") {
+  const logo = document.querySelector(".hero-banner__logo-estacion");
+  let started = false;
+  function start() {
+    if (started) return;
+    started = true;
     play();
+  }
+
+  if (logo) {
+    logo.addEventListener("animationend", start, { once: true });
+    // Safety net in case the animation is skipped (reduced motion, no CSS, etc.)
+    setTimeout(start, 2800);
   } else {
-    window.addEventListener("load", play);
+    start();
   }
 })();

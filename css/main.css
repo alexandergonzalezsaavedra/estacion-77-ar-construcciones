@@ -74,6 +74,32 @@ body {
     height: 58px;
     width: auto;
 }
+.site-header__logo--ar {
+    animation: header-logo-left 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.site-header__logo--metro {
+    animation: header-logo-right 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+@keyframes header-logo-left {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes header-logo-right {
+    0% {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 
 .hero-banner {
     min-height: 100dvh;
@@ -86,6 +112,17 @@ body {
     margin-left: -6%;
     will-change: transform;
     transform-style: preserve-3d;
+    animation: hero-window-in 1.4s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+@keyframes hero-window-in {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.94);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 .hero-window__svg {
     display: block;
@@ -123,11 +160,16 @@ body {
 }
 .flap-char {
     display: inline-block;
+    opacity: 0;
+    transition: opacity 0.15s ease;
     backface-visibility: hidden;
     transform-origin: 50% 50%;
 }
+.flap-char.is-visible {
+    opacity: 1;
+}
 .flap-char.is-flipping {
-    animation: flap-flip 0.045s linear;
+    animation: flap-flip 0.1s ease-in;
 }
 @keyframes flap-flip {
     0% {
@@ -151,11 +193,19 @@ body {
     border-radius: 50px;
     color: white;
     text-decoration: none;
-    transition: 0.3s;
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease,
+        background 0.3s;
+}
+.hero-banner__link.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 .hero-banner__link:hover {
     background: var(--darkred-color);
-    transition: 0.3s;
 }
 .intro {
     background: var(--black-color);
@@ -165,6 +215,17 @@ body {
     align-items: center;
     overflow: hidden;
     padding: 20px 0;
+}
+.intro [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+.intro [data-reveal].is-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 .intro > .container {
     width: 100%;
