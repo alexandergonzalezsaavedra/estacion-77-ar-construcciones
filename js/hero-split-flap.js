@@ -13,13 +13,26 @@
   function buildChars(line) {
     const text = line.textContent;
     line.textContent = "";
-    return Array.from(text).map((char) => {
-      const span = document.createElement("span");
-      span.className = "flap-char";
-      span.textContent = char === " " ? " " : char;
-      line.appendChild(span);
-      return { span, final: char === " " ? " " : char };
+    const result = [];
+
+    text.split(/(\s+)/).forEach((chunk) => {
+      if (chunk === "") return;
+      const isSpace = /^\s+$/.test(chunk);
+      const target = isSpace ? line : document.createElement("span");
+      if (!isSpace) target.className = "flap-word";
+
+      Array.from(chunk).forEach((char) => {
+        const span = document.createElement("span");
+        span.className = "flap-char";
+        span.textContent = char === " " ? " " : char;
+        target.appendChild(span);
+        result.push({ span, final: char === " " ? " " : char });
+      });
+
+      if (!isSpace) line.appendChild(target);
     });
+
+    return result;
   }
 
   function runFlap(span, finalChar, delay, onDone) {
@@ -58,8 +71,7 @@
   const lineChars = lines.map(buildChars);
 
   function revealCta() {
-    const cta = document.querySelector("[data-hero-cta]");
-    if (cta) cta.classList.add("is-visible");
+    document.dispatchEvent(new Event("hero-cta-ready"));
   }
 
   function play() {

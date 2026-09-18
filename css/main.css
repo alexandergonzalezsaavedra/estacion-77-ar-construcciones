@@ -50,6 +50,10 @@
     --black-color: #232120;
     --light-blue-color: #bee3ee;
 }
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
 body {
     background: var(--bg-primary);
     font-family: var(--font-principal);
@@ -57,6 +61,7 @@ body {
     padding: 0;
     margin: 0;
     overflow-x: hidden;
+    width: 100%;
 }
 .site-header {
     background: var(--bg-primary);
@@ -79,6 +84,15 @@ body {
 }
 .site-header__logo--metro {
     animation: header-logo-right 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+@media (max-width: 640px) {
+    .site-header__logo {
+        height: 28px;
+    }
+    .site-header__inner {
+        gap: 12px;
+        padding: 20px 16px 14px;
+    }
 }
 @keyframes header-logo-left {
     0% {
@@ -110,19 +124,10 @@ body {
     display: block;
     width: 112%;
     margin-left: -6%;
-    will-change: transform;
+    will-change: transform, opacity;
     transform-style: preserve-3d;
-    animation: hero-window-in 1.4s cubic-bezier(0.33, 1, 0.68, 1) both;
-}
-@keyframes hero-window-in {
-    0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.94);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    opacity: 0;
+    transform: translateY(30px) scale(0.94);
 }
 .hero-window__svg {
     display: block;
@@ -130,21 +135,18 @@ body {
     height: auto;
     filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.25));
 }
+@media (max-width: 767px) {
+    .hero-window {
+        width: 100%;
+        margin-left: 0;
+    }
+}
 .hero-banner__logo-estacion {
     width: 90%;
-    animation: hero-logo-drop 2.4s cubic-bezier(0.33, 1, 0.68, 1) both;
-}
-@keyframes hero-logo-drop {
-    0% {
-        opacity: 0;
-        transform: translateY(-110px) scale(0.96);
-        filter: blur(6px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-    }
+    opacity: 0;
+    transform: translateY(-110px) scale(0.96);
+    filter: blur(6px);
+    will-change: transform, opacity, filter;
 }
 .hero-banner__h2 {
     font-family: var(--font-led);
@@ -155,8 +157,17 @@ body {
     color: #3a3a3a;
     perspective: 400px;
 }
+@media (max-width: 640px) {
+    .hero-banner__h2 {
+        font-size: 1.15rem;
+        line-height: 1.5rem;
+    }
+}
 .flap-line {
     display: inline-block;
+}
+.flap-word {
+    white-space: nowrap;
 }
 .flap-char {
     display: inline-block;
@@ -195,14 +206,8 @@ body {
     text-decoration: none;
     opacity: 0;
     transform: translateY(18px);
-    transition:
-        opacity 0.5s ease,
-        transform 0.5s ease,
-        background 0.3s;
-}
-.hero-banner__link.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+    will-change: transform, opacity;
+    transition: background 0.3s;
 }
 .hero-banner__link:hover {
     background: var(--darkred-color);
@@ -216,16 +221,17 @@ body {
     overflow: hidden;
     padding: 20px 0;
 }
+@media (max-width: 767px) {
+    .intro {
+        max-height: none;
+        overflow: visible;
+        padding: 120px 0;
+    }
+}
 .intro [data-reveal] {
     opacity: 0;
     transform: translateY(28px);
-    transition:
-        opacity 0.7s ease,
-        transform 0.7s ease;
-}
-.intro [data-reveal].is-in {
-    opacity: 1;
-    transform: translateY(0);
+    will-change: transform, opacity;
 }
 .intro > .container {
     width: 100%;
@@ -288,6 +294,17 @@ body {
 .intro__dot--2 {
     top: -10px;
     right: -18px;
+}
+@media (max-width: 767px) {
+    .intro__title-row {
+        font-size: 22px;
+    }
+    .intro__title-highlight {
+        font-size: 28px;
+    }
+    .intro__subtitle {
+        font-size: 20px;
+    }
 }
 
 .intro__subtitle {
@@ -419,6 +436,11 @@ select.intro__field {
     position: relative;
     z-index: 50;
 }
+@media (max-width: 767px) {
+    .typology {
+        min-height: 0;
+    }
+}
 .typology__line-seven {
     position: absolute;
     width: 20%;
@@ -443,6 +465,12 @@ select.intro__field {
     letter-spacing: 0.01em;
     text-align: center;
     line-height: 44px;
+}
+@media (max-width: 640px) {
+    .typology__title-section {
+        font-size: 28px;
+        line-height: 32px;
+    }
 }
 .typology__slider {
     position: relative;
@@ -544,6 +572,7 @@ select.intro__field {
     min-height: 100dvh;
     position: relative;
     z-index: 50;
+    overflow-x: hidden;
 }
 .typology-tabs__dot-anchor {
     position: relative;

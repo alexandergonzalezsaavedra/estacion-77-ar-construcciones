@@ -2,50 +2,110 @@
   const section = document.querySelector(".intro");
   if (!section) return;
 
-  // Parallax: the background arrow drifts slower than the page scroll.
-  const arrow = section.querySelector(".intro__bg-indicator");
-  if (arrow) {
-    const PARALLAX_FACTOR = 0.18;
-    let ticking = false;
+  const ENTRANCE_DURATION = 700;
+  const STAGGER = 90;
+  const SCROLL_EASE = 0.15;
 
-    function updateParallax() {
-      const rect = section.getBoundingClientRect();
-      arrow.style.transform = "translateY(" + (-rect.top * PARALLAX_FACTOR).toFixed(1) + "px)";
-      ticking = false;
-    }
-
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking) {
-          requestAnimationFrame(updateParallax);
-          ticking = true;
-        }
-      },
-      { passive: true }
-    );
-
-    updateParallax();
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
   }
 
-  // Staggered reveal for everything else in the section, once it scrolls into view.
-  const revealItems = Array.from(section.querySelectorAll("[data-reveal]"));
-  if (!revealItems.length) return;
+  // Background arrow: pure continuous parallax, no entrance reveal.
+  const arrow = section.querySelector(".intro__bg-indicator");
+  const ARROW_FACTOR = 0.18;
 
-  revealItems.forEach((el, i) => {
-    el.style.transitionDelay = i * 90 + "ms";
-  });
+  // Foreground content: staggered fade/rise reveal on first view, plus its
+  // own (subtler) parallax factor once visible — closer layers drift less.
+  const LAYER_FACTORS = {
+    "intro__title": 0.08,
+    "intro__subtitle": 0.08,
+    "intro__description": 0.08,
+    "intro__content-form": 0.06,
+    "intro__feature": 0.05,
+  };
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        revealItems.forEach((el) => el.classList.add("is-in"));
-        observer.disconnect();
-      });
-    },
-    { threshold: 0.25 }
-  );
+  function factorFor(el) {
+    for (const cls in LAYER_FACTORS) {
+      if (el.classList.contains(cls)) return LAYER_FACTORS[cls];
+    }
+    return 0.06;
+  }
 
-  observer.observe(section);
+  const items = Array.from(section.querySelectorAll("[data-reveal]")).map((el, i) => ({
+    el,
+    factor: factorFor(el),
+    triggerAt: i * STAGGER,
+    triggered: false,
+    start: null,
+    done: false,
+  }));
+
+  let targetOffset = 0;
+  let currentOffset = 0;
+  let raf = null;
+
+  function updateScrollTarget() {
+    const rect = section.getBoundingClientRect();
+    targetOffset = -rect.top;
+    if (!raf) raf = requestAnimationFrame(render);
+  }
+
+  function render(now) {
+    now = now || performance.now();
+    let stillAnimating = false;
+
+    currentOffset += (targetOffset - currentOffset) * SCROLL_EASE;
+    if (Math.abs(targetOffset - currentOffset) > 0.5) stillAnimating = true;
+
+    if (arrow) {
+      arrow.style.transform = "translateY(" + (currentOffset * ARROW_FACTOR).toFixed(1) + "px)";
+    }
+
+    items.forEach((item) => {
+      if (!item.triggered) return;
+      if (item.start === null) item.start = now;
+
+      let ease = 1;
+      if (!item.done) {
+        const progress = Math.min(1, (now - item.start) / ENTRANCE_DURATION);
+        ease = easeOutCubic(progress);
+        if (progress < 1) stillAnimating = true;
+        else item.done = true;
+      }
+
+      const entranceTY = (1 - ease) * 28;
+      const parallaxTY = currentOffset * item.factor;
+      item.el.style.opacity = ease.toFixed(3);
+      item.el.style.transform = "translateY(" + (entranceTY + parallaxTY).toFixed(2) + "px)";
+    });
+
+    if (stillAnimating) {
+      raf = requestAnimationFrame(render);
+    } else {
+      raf = null;
+    }
+  }
+
+  window.addEventListener("scroll", updateScrollTarget, { passive: true });
+
+  if (items.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          items.forEach((item) => {
+            setTimeout(() => {
+              item.triggered = true;
+              if (!raf) raf = requestAnimationFrame(render);
+            }, item.triggerAt);
+          });
+          observer.disconnect();
+        });
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(section);
+  }
+
+  raf = requestAnimationFrame(render);
 })();
