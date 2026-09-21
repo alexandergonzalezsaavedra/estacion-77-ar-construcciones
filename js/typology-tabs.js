@@ -17,4 +17,16 @@
   );
 
   goTo(0);
+
+  // Plans animate in the first time the tabs scroll into view; switching
+  // tabs later replays it because the panel goes display:none -> block.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (!entries[0].isIntersecting) return;
+      tabs.classList.add('is-inview');
+      observer.disconnect();
+    },
+    { threshold: 0, rootMargin: '0px 0px -35% 0px' }
+  );
+  observer.observe(tabs);
 })();

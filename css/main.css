@@ -1,4 +1,19 @@
 @font-face {
+    font-family: "FanfareTicker";
+    src: url("../fonts/fanfareticker.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "HelveticaNowDisplay-Bold";
+    src: url("../fonts/HelveticaNowDisplay-Bold.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "HelveticaNowDisplay-Medium";
+    src: url("../fonts/HelveticaNowDisplay-Medium.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
     font-family: "Fanfare Ticker";
     src: url("../fonts/fanfareticker.ttf") format("truetype");
     font-weight: normal;
@@ -119,6 +134,26 @@ body {
     min-height: 100dvh;
     display: flex;
     align-items: center;
+}
+@media (max-width: 767px) {
+    .hero-banner {
+        padding: 120px 0 56px;
+    }
+}
+@media (min-width: 1024px) {
+    .hero-banner__container {
+        max-width: 1100px;
+    }
+}
+@media (min-width: 1280px) {
+    .hero-banner__container {
+        max-width: 1440px;
+    }
+}
+@media (min-width: 1536px) {
+    .hero-banner__container {
+        max-width: 1680px;
+    }
 }
 .hero-window {
     display: block;
@@ -453,8 +488,52 @@ select.intro__field {
     top: -10rem;
     right: -8rem;
 }
-.typology__line-seven img {
+.typology__line-svg {
+    display: block;
     width: 100%;
+    height: auto;
+}
+.rail-train {
+    fill: none;
+    animation: rail-dash 3s linear infinite;
+}
+.typology__line-seven .rail-train {
+    animation-name: rail-dash, rail-glow-on-dark;
+}
+.typology__line-end .rail-train {
+    animation-name: rail-dash, rail-glow-on-red;
+}
+.typology__line-seven .rail-train,
+.typology__line-end .rail-train {
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+@keyframes rail-dash {
+    from {
+        stroke-dashoffset: 0;
+    }
+    to {
+        stroke-dashoffset: var(--dash-end, 0px);
+    }
+}
+@keyframes rail-glow-on-dark {
+    0%,
+    100% {
+        stroke: #f4efe6;
+    }
+    50% {
+        stroke: var(--red-color);
+    }
+}
+@keyframes rail-glow-on-red {
+    0%,
+    100% {
+        stroke: #f4efe6;
+    }
+    50% {
+        stroke: var(--black-color);
+    }
 }
 .typology__title-section {
     display: block;
@@ -473,28 +552,145 @@ select.intro__field {
     }
 }
 .typology__slider {
+    --card-w: 76%;
+    --card-scale: 0.82;
+    --side-shift: -11.8%;
     position: relative;
     margin-top: 40px;
-    border-radius: 32px;
-    overflow: hidden;
+    padding-bottom: 44px;
 }
 .typology__track {
-    display: flex;
-    transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+    position: relative;
+    height: min(70dvh, 620px);
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: grab;
+}
+.typology__track.is-dragging {
+    cursor: grabbing;
+}
+.typology__track.is-dragging .typology__slide {
+    transition:
+        filter 0.7s ease,
+        opacity 0.5s ease;
 }
 .typology__slide {
-    flex: 0 0 100%;
-    min-width: 0;
+    position: absolute;
+    top: 0;
+    left: calc((100% - var(--card-w)) / 2);
+    width: var(--card-w);
+    height: 100%;
+    overflow: hidden;
+    border-radius: 28px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    transform: perspective(1400px) translateX(0) scale(0.6) rotateY(0deg);
+    filter: brightness(0.6);
+    transition:
+        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.5s ease,
+        filter 0.7s ease;
+    will-change: transform;
+}
+.typology__slide.is-jump {
+    transition: none;
+}
+.typology__slide.is-prev {
+    opacity: 1;
+    z-index: 2;
+    transform: perspective(1400px) translateX(var(--side-shift)) scale(var(--card-scale)) rotateY(10deg);
+}
+.typology__slide.is-next {
+    opacity: 1;
+    z-index: 2;
+    transform: perspective(1400px) translateX(calc(var(--side-shift) * -1)) scale(var(--card-scale)) rotateY(-10deg);
+}
+.typology__slide.is-active {
+    opacity: 1;
+    z-index: 3;
+    pointer-events: auto;
+    filter: none;
+    transform: perspective(1400px) translateX(0) scale(1) rotateY(0deg);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
 }
 .typology__slide img {
+    -webkit-user-drag: none;
+    pointer-events: none;
     display: block;
     width: 100%;
-    height: 70dvh;
+    height: 100%;
     object-fit: cover;
+    transform: translateX(0) scale(1.25);
+    translate: var(--dx, 0px) var(--sy, 0px);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, translate;
+}
+.typology__slide.is-prev img {
+    transform: translateX(5%) scale(1.25);
+}
+.typology__slide.is-next img {
+    transform: translateX(-5%) scale(1.25);
+}
+.typology__slide.is-jump img {
+    transition: none;
+}
+.typology__slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.1) 45%, rgba(0, 0, 0, 0.45));
+    pointer-events: none;
+}
+.typology__caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 24px 32px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+}
+.typology__slide.is-active .typology__caption {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.35s;
+}
+.typology__caption-title {
+    margin: 0;
+    font-size: clamp(24px, 3vw, 44px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+@media (max-width: 767px) {
+    .typology__slider {
+        --card-w: 84%;
+        --card-scale: 0.8;
+        --side-shift: -12.4%;
+    }
+    .typology__track {
+        height: min(60dvh, 440px);
+    }
+    .typology__caption {
+        padding-bottom: 24px;
+    }
 }
 .typology__arrow {
     position: absolute;
-    top: 50%;
+    z-index: 5;
+    top: calc(50% - 22px);
     transform: translateY(-50%);
     display: flex;
     align-items: center;
@@ -503,14 +699,14 @@ select.intro__field {
     height: 44px;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(35, 33, 32, 0.6);
     color: #fff;
     font-size: 16px;
     cursor: pointer;
     transition: background 0.3s;
 }
 .typology__arrow:hover {
-    background: rgba(255, 255, 255, 0.6);
+    background: var(--red-color);
 }
 .typology__arrow--prev {
     left: 20px;
@@ -521,7 +717,7 @@ select.intro__field {
 .typology__dots {
     position: absolute;
     left: 50%;
-    bottom: 20px;
+    bottom: 10px;
     transform: translateX(-50%);
     display: flex;
     gap: 10px;
@@ -531,7 +727,7 @@ select.intro__field {
     height: 8px;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(35, 33, 32, 0.3);
     padding: 0;
     cursor: pointer;
     transition:
@@ -539,7 +735,7 @@ select.intro__field {
         transform 0.3s;
 }
 .typology__dot.is-active {
-    background: #fff;
+    background: var(--red-color);
     transform: scale(1.3);
 }
 @media (min-width: 768px) {
@@ -592,7 +788,7 @@ select.intro__field {
     right: auto;
 }
 .typology-tabs {
-    margin-top: 64px;
+    margin-top: 32px;
 }
 .typology-tabs__nav {
     position: relative;
@@ -682,6 +878,31 @@ select.intro__field {
     width: 100%;
     height: auto;
     border-radius: 24px;
+    opacity: 0;
+}
+.typology-tabs.is-inview .typology-tabs__panel.is-active .typology-detail__floorplan {
+    animation: floorplan-in 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.typology-tabs.is-inview
+    .typology-tabs__panel.is-active
+    .typology-detail__floorplan:nth-child(2) {
+    animation-delay: 0.15s;
+}
+@keyframes floorplan-in {
+    0% {
+        opacity: 0;
+        transform: translateY(90px) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .typology-tabs.is-inview .typology-tabs__panel.is-active .typology-detail__floorplan {
+        animation-duration: 0.01s;
+        animation-delay: 0s;
+    }
 }
 .typology-specs {
     display: flex;
