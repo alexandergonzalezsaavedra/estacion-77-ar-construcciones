@@ -11,7 +11,7 @@
   const MAX_STEPS = 10;
 
   function buildChars(line) {
-    const text = line.textContent;
+    const text = line.textContent.replace(/\s+/g, " ").trim();
     line.textContent = "";
     const result = [];
 
