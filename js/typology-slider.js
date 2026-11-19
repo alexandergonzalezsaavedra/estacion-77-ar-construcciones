@@ -86,7 +86,7 @@
     moved = true;
     dx = mx;
     activeSlide().style.transform =
-      'perspective(1400px) translateX(' + dx * 0.7 + 'px) scale(1) rotateY(' + dx * -0.03 + 'deg)';
+      'perspective(1400px) translateX(' + dx * 0.4 + 'px) scale(1)';
     activeSlide().style.setProperty('--dx', Math.max(-40, Math.min(40, dx * -0.15)) + 'px');
   }
 
@@ -164,7 +164,8 @@
   function updateScrollParallax() {
     const rect = slider.getBoundingClientRect();
     const offset = rect.top + rect.height / 2 - window.innerHeight / 2;
-    const sy = Math.max(-50, Math.min(50, offset * -0.08));
+    // Kept within the image's 12% overscan (see .typology__slide img) so no edge shows.
+    const sy = Math.max(-30, Math.min(30, offset * -0.06));
     slides.forEach((slide) => slide.style.setProperty('--sy', sy.toFixed(1) + 'px'));
     scrollTicking = false;
   }

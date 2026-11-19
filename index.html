@@ -129,13 +129,39 @@
   <body>
     <header class="site-header">
       <div
-        class="container site-header__inner mx-auto flex flex-wrap items-center justify-between"
+        class="container site-header__inner mx-auto flex items-center justify-between"
       >
         <img
           class="site-header__logo site-header__logo--ar"
           src="./img/logo-ar-construcciones-50.png"
           alt="AR Construcciones - 50 años"
         />
+        <nav
+          class="site-header__nav"
+          aria-label="Menú principal"
+        >
+          <a
+            class="mode-pill mode-pill--residencial"
+            href="#residencial"
+          >
+            <span class="mode-pill__dot"></span>
+            Residencial
+          </a>
+          <a
+            class="mode-pill mode-pill--hotelero"
+            href="#hotelero"
+          >
+            <span class="mode-pill__dot"></span>
+            Hotelero
+          </a>
+          <a
+            class="mode-pill mode-pill--senior"
+            href="#senior"
+          >
+            <span class="mode-pill__dot"></span>
+            Senior
+          </a>
+        </nav>
         <img
           class="site-header__logo site-header__logo--metro"
           src="./img/logo-metro-medellin.png"
@@ -145,92 +171,98 @@
     </header>
     <main>
       <section class="hero-banner">
-        <div
-          class="container hero-banner__container mx-auto mt-12 px-6 md:px-8"
-        >
-          <div
-            class="grid grid-cols-1 md:grid-cols-12 items-center gap-x-12 gap-y-10"
-          >
-            <div class="col-span-1 md:col-span-5">
-              <div
-                class="hero-window"
-                data-hero-window
+        <div class="hero-banner__layout">
+          <div class="hero-banner__media">
+            <div
+              class="hero-window"
+              data-hero-window
+            >
+              <svg
+                class="hero-window__svg"
+                viewBox="0 0 670 516"
+                preserveAspectRatio="xMidYMid meet"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  class="hero-window__svg"
-                  viewBox="0 0 766.84 506.85"
-                  preserveAspectRatio="xMidYMid meet"
-                  xmlns="http://www.w3.org/2000/svg"
+                <defs>
+                  <clipPath id="heroWindowClip">
+                    <!-- Large window: bleeds off the left edge, rounded on the right -->
+                    <path d="M0,0H420a48,48 0 0 1 48,48V468a48,48 0 0 1 -48,48H0Z" />
+                    <!-- Narrow window, top piece -->
+                    <path d="M489,116V48a48,48 0 0 1 48,-48H622a48,48 0 0 1 48,48V116Z" />
+                    <!-- Narrow window, bottom piece -->
+                    <path d="M489,156H670V468a48,48 0 0 1 -48,48H537a48,48 0 0 1 -48,-48Z" />
+                  </clipPath>
+                </defs>
+                <g clip-path="url(#heroWindowClip)">
+                  <image
+                    class="hero-window__img"
+                    data-hero-window-img
+                    href="./img/estacion-77-hero-banner.jpg"
+                    x="-40"
+                    y="-30"
+                    width="750"
+                    height="576"
+                    preserveAspectRatio="xMidYMid slice"
+                  />
+                </g>
+                <text
+                  class="hero-window__caption"
+                  x="579.5"
+                  y="501"
+                  text-anchor="middle"
                 >
-                  <defs>
-                    <clipPath id="heroWindowClip">
-                      <path
-                        d="M484.63,452.01c0,26.61-21.57,48.18-48.18,48.18H73.56c-26.61,0-48.18-21.57-48.18-48.18V54.84
-		c0-26.61,21.57-48.18,48.18-48.18h362.88c26.61,0,48.18,21.57,48.18,48.18V452.01z"
-                      />
-                      <path
-                        d="M741.46,452.01c0,26.61-21.57,48.18-48.18,48.18H591.83c-26.61,0-48.18-21.57-48.18-48.18V155.24h197.82
-		V452.01z"
-                      />
-                      <path
-                        d="M741.46,119.14H543.65V54.84c0-26.61,21.57-48.18,48.18-48.18h101.45c26.61,0,48.18,21.57,48.18,48.18V119.14z"
-                      />
-                    </clipPath>
-                  </defs>
-                  <g clip-path="url(#heroWindowClip)">
-                    <image
-                      class="hero-window__img"
-                      data-hero-window-img
-                      href="./img/hero-bg-window.jpg"
-                      x="-40"
-                      y="-30"
-                      width="846.84"
-                      height="566.85"
-                      preserveAspectRatio="xMidYMid slice"
-                    />
-                  </g>
-                </svg>
-              </div>
+                  Imagen ilustrativa
+                </text>
+              </svg>
             </div>
-            <div class="col-span-1 md:col-span-7 flex flex-col items-center">
+          </div>
+          <div class="hero-banner__content">
+            <div class="hero-banner__logo-estacion">
               <img
-                class="hero-banner__logo-estacion"
+                class="hero-banner__logo-img"
                 src="./img/logo-estacion-77.png"
-                alt="Logo Estación 77 - AR Construcciones"
+                alt="Estación 77 - Ciudad Peldar"
               />
-              <h2
-                class="hero-banner__h2 text-center my-12"
-                data-split-flap
-              >
-                <span
-                  class="flap-line"
-                  data-flap-line
-                >
-                  Apartamentos en la mejor ubicación
-                </span>
-                <br />
-                <span
-                  class="flap-line"
-                  data-flap-line
-                >
-                  de ciudad peldar con conexón directa
-                </span>
-                <br />
-                <span
-                  class="flap-line"
-                  data-flap-line
-                >
-                  a la estación Envigado del metro.
-                </span>
-              </h2>
-              <a
-                class="hero-banner__link"
-                href="#"
-                data-hero-cta
-              >
-                CONTACTA A UN ASESOR
-              </a>
+              <p class="hero-banner__logo-tagline">
+                Residencial <span aria-hidden="true">•</span> Hotelero
+                <span aria-hidden="true">•</span> Senior
+              </p>
             </div>
+            <h2
+              class="hero-banner__h2 text-center"
+              data-split-flap
+            >
+              <span
+                class="flap-line"
+                data-flap-line
+              >
+                Una sola estación, tres formas
+              </span>
+              <br />
+              <span
+                class="flap-line"
+                data-flap-line
+              >
+                diferentes de vivirla
+              </span>
+            </h2>
+            <ul
+              class="hero-banner__modes"
+              data-hero-cta
+            >
+              <li class="mode-pill mode-pill--residencial">
+                <span class="mode-pill__dot"></span>
+                Residencial
+              </li>
+              <li class="mode-pill mode-pill--hotelero">
+                <span class="mode-pill__dot"></span>
+                Hotelero
+              </li>
+              <li class="mode-pill mode-pill--senior">
+                <span class="mode-pill__dot"></span>
+                Senior
+              </li>
+            </ul>
           </div>
         </div>
       </section>
@@ -252,29 +284,31 @@
               >
                 <span class="intro__title-row">
                   <span class="intro__dot intro__dot--1"></span>
-                  Apartamentos de
                   <span class="intro__dot intro__dot--2"></span>
+                  <span class="intro__dot intro__dot--3"></span>
+                  Apartamentos con
+                  <br />
+                  áreas desde
                 </span>
-                <br />
                 <span class="intro__title-highlight">
-                  66.5 - 69 - 88.5 -102 m2
+                  <strong>29</strong> hasta <strong>105 m2</strong>
                 </span>
               </h3>
               <p
                 class="intro__subtitle"
                 data-reveal
               >
-                Áreas construidas
+                *Áreas construidas
               </p>
               <p
                 class="intro__description"
                 data-reveal
               >
-                Este proyecto de 29 pisos combina de manera inteligente vivienda
-                y comercio, creando un entorno dinámico y moderno. Amplios
-                apartamentos de 2 o 3 habitaciones, 2 a 4 baños, todos con
-                balcones y algunos con opción de parqueadero, pensados para
-                adaptarse a tu estilo de vida.
+                Este macroproyecto de 30 pisos combina de manera inteligente
+                vivienda, inversión, comercio y oficinas, creando un entorno
+                dinámico y moderno. Suites y amplios apartamentos de 2 o 3
+                habitaciones, todos con balcones y algunos con opción de
+                parqueadero privado, pensados para adaptarse a tu estilo de vida.
               </p>
             </div>
             <div class="col-span-1 md:col-span-4">
@@ -283,7 +317,7 @@
                 id="registro"
                 data-reveal
               >
-                <form>
+                <form class="intro__form">
                   <h3 class="intro__form-title">CONOCE ESTACIÓN 77</h3>
                   <fieldset class="intro__fieldset">
                     <legend class="intro__form-legend">
@@ -298,7 +332,8 @@
                       type="text"
                       id="nombre"
                       name="nombre"
-                      placeholder="*Nombre completo"
+                      placeholder="Nombre completo*"
+                      aria-label="Nombre completo"
                     />
 
                     <input
@@ -306,25 +341,36 @@
                       type="email"
                       id="email"
                       name="email"
-                      placeholder="*Correo electrónico"
+                      placeholder="Correo electrónico*"
+                      aria-label="Correo electrónico"
                     />
 
                     <input
                       class="intro__field"
-                      type="text"
+                      type="tel"
                       id="telefono"
                       name="telefono"
-                      placeholder="*Télefono / Celular"
+                      placeholder="Teléfono / Celular*"
+                      aria-label="Teléfono o celular"
                     />
 
-                    <select class="intro__field">
-                      <option value="">*Me interesa un apartamento de</option>
+                    <select
+                      class="intro__field"
+                      aria-label="Me interesa un apartamento"
+                    >
+                      <option value="">Me interesa un Apartamento:</option>
                     </select>
-                    <select class="intro__field">
-                      <option value="">*Me interesa comprar para</option>
+                    <select
+                      class="intro__field"
+                      aria-label="Me interesa comprar para"
+                    >
+                      <option value="">Me interesa comprar para:</option>
                     </select>
-                    <select class="intro__field">
-                      <option value="">*Estoy pensando en comprar</option>
+                    <select
+                      class="intro__field"
+                      aria-label="Estoy pensando en comprar"
+                    >
+                      <option value="">Estoy pensando en comprar:</option>
                     </select>
 
                     <label class="intro__checkbox">
@@ -382,11 +428,13 @@
                 alt="conexión directa estación 77"
               />
               <p class="intro__feature-text">
-                La mejor ubicación
+                La mejor ubicación en
                 <br />
-                en Ciudad Peldar,
+                Ciudad Peldar, sobre la
                 <br />
-                sobre la Av. Regional
+                Av. Regional y frente
+                <br />
+                al C.C. Viva Envigado.
               </p>
             </div>
 
@@ -399,67 +447,28 @@
                 alt="conexión directa estación 77"
               />
               <p class="intro__feature-text">
-                Frente al C.C. Viva Envigado,
+                Aproximadamente
                 <br />
-                oferta comercial
+                5.000 m² de comercio
                 <br />
-                y de entretenimiento.
+                y gran parque lineal.
               </p>
             </div>
           </div>
         </div>
       </section>
       <section class="typology">
+        <!-- Soft metro-colors glow on the left -->
         <div
-          class="typology__line-seven"
-          data-typology-parallax="0.15"
+          class="typology__glow-wrap"
+          aria-hidden="true"
         >
-          <svg
-            class="typology__line-svg"
-            data-rail-svg
-            viewBox="0 0 376 1037"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              class="rail-base"
-              d="M40,28 L215,28 C280,28 315,122 300,180 L88,1010"
-              stroke="#3a1512"
-              stroke-width="54"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              data-rail-train
-              class="rail-train"
-              d="M40,28 L215,28 C280,28 315,122 300,180 L88,1010"
-              stroke-width="54"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <rect
-              x="22"
-              y="608"
-              width="330"
-              height="54"
-              rx="27"
-              fill="#221f1f"
-            />
-            <circle
-              cx="274.4"
-              cy="280"
-              r="15"
-              fill="#dfdad5"
-            />
-            <circle
-              cx="183.8"
-              cy="635"
-              r="15"
-              fill="#dfdad5"
-            />
-          </svg>
+          <div
+            class="typology__glow"
+            data-typology-parallax="0.12"
+          ></div>
         </div>
+        <!-- Light blue rail coming down from the section above -->
         <div
           class="typology__line-end"
           data-typology-parallax="0.22"
@@ -474,33 +483,40 @@
           >
             <path
               class="rail-base"
-              d="M25,30 L25,590 C25,628 50,655 88,655 L280,655"
-              stroke="#e7392f"
-              stroke-width="50"
+              d="M25,30 L25,590 C25,628 50,655 88,655 L309,655"
+              stroke="#7cc6e2"
+              stroke-width="18"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               data-rail-train
               class="rail-train"
-              d="M25,30 L25,590 C25,628 50,655 88,655 L280,655"
-              stroke-width="50"
+              d="M25,30 L25,590 C25,628 50,655 88,655 L309,655"
+              stroke-width="18"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <circle
               cx="25"
               cy="30"
-              r="14"
-              fill="#dfdad5"
+              r="11"
+              fill="#232120"
+              stroke="#7cc6e2"
+              stroke-width="7"
             />
           </svg>
         </div>
-        <div class="container mx-auto py-24 px-6 md:px-8">
-          <h3 class="typology__title-section">
+        <div class="typology__content container mx-auto pt-24 pb-16 md:pb-20 px-6 md:px-8">
+          <h3 class="typology__title-section typology__title-section--dots">
+            <span class="typology__title-dot typology__title-dot--purple"></span>
+            <span class="typology__title-dot typology__title-dot--green"></span>
+            <span class="typology__title-dot typology__title-dot--blue"></span>
             Zonas comunes donde
             <br />
             el epicentro eres tú
+            <br />
+            y se adaptan a tu estilo de vida
           </h3>
           <div
             class="typology__slider"
@@ -512,11 +528,36 @@
             >
               <div class="typology__slide is-active">
                 <img
+                  src="./img/slide-amenidades/slide-estacion-77.jpg"
+                  alt="Salón social Estación 77"
+                />
+                <div class="typology__caption">
+                  <h4 class="typology__caption-title">Salón social</h4>
+                  <ul
+                    class="typology__caption-modes"
+                    aria-label="Disponible para"
+                  >
+                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
+                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
+                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="typology__slide">
+                <img
                   src="./img/slide-amenidades/gym.jpg"
                   alt="Gimnasio Estación 77"
                 />
                 <div class="typology__caption">
                   <h4 class="typology__caption-title">Gym</h4>
+                  <ul
+                    class="typology__caption-modes"
+                    aria-label="Disponible para"
+                  >
+                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
+                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
+                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                  </ul>
                 </div>
               </div>
               <div class="typology__slide">
@@ -526,6 +567,14 @@
                 />
                 <div class="typology__caption">
                   <h4 class="typology__caption-title">Parqueadero</h4>
+                  <ul
+                    class="typology__caption-modes"
+                    aria-label="Disponible para"
+                  >
+                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
+                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
+                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                  </ul>
                 </div>
               </div>
               <div class="typology__slide">
@@ -535,9 +584,19 @@
                 />
                 <div class="typology__caption">
                   <h4 class="typology__caption-title">Zona BBQ</h4>
+                  <ul
+                    class="typology__caption-modes"
+                    aria-label="Disponible para"
+                  >
+                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
+                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
+                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                  </ul>
                 </div>
               </div>
             </div>
+
+            <span class="typology__note">Imagen ilustrativa</span>
 
             <button
               class="typology__arrow typology__arrow--prev"
@@ -578,13 +637,148 @@
                 type="button"
                 aria-label="Ir a la diapositiva 3"
               ></button>
+              <button
+                class="typology__dot"
+                data-dot="3"
+                type="button"
+                aria-label="Ir a la diapositiva 4"
+              ></button>
             </div>
+          </div>
+        </div>
+
+        <!-- Three ways of living: replaces the typology tabs section below
+             (that section is hidden, not removed). -->
+        <div class="typology-modes">
+          <div class="typology-modes__content container mx-auto px-6 md:px-8">
+            <h3 class="typology-modes__title">
+              Conoce más de las tres formas de vivir en
+              <br />
+              este <strong>macroproyecto de apartamentos</strong>
+            </h3>
+            <nav
+              class="typology-modes__pills"
+              aria-label="Formas de vivir"
+            >
+              <a
+                class="mode-pill mode-pill--residencial"
+                href="#residencial"
+              >
+                <span class="mode-pill__dot"></span>
+                Residencial
+              </a>
+              <a
+                class="mode-pill mode-pill--hotelero"
+                href="#hotelero"
+              >
+                <span class="mode-pill__dot"></span>
+                Hotelero
+              </a>
+              <a
+                class="mode-pill mode-pill--senior"
+                href="#senior"
+              >
+                <span class="mode-pill__dot"></span>
+                Senior
+              </a>
+            </nav>
+          </div>
+
+          <!-- Metro lines: purple runs edge to edge, light blue enters from
+               the left and green leaves to the right. -->
+          <div
+            class="typology-modes__lines"
+            aria-hidden="true"
+          >
+            <!-- Each line: a base path + an identical `data-rail-train` path
+                 that typology-rail-train.js turns into the moving light. -->
+            <!-- Purple: drawn in screen pixels (no viewBox stretching) so the
+                 moving light keeps its rounded ends. -->
+            <svg
+              class="typology-modes__line-purple"
+              data-rail-svg
+              fill="none"
+            >
+              <line
+                x1="0"
+                y1="50%"
+                x2="100%"
+                y2="50%"
+                stroke="#6a3d9a"
+              />
+              <line
+                data-rail-train
+                class="rail-train"
+                x1="0"
+                y1="50%"
+                x2="100%"
+                y2="50%"
+                stroke-linecap="round"
+              />
+            </svg>
+            <svg
+              class="typology-modes__line typology-modes__line--blue"
+              data-rail-svg
+              viewBox="0 0 320 160"
+              fill="none"
+            >
+              <path
+                d="M-10,20 H15 C70,20 70,140 125,140 H295"
+                stroke="#7cc6e2"
+                stroke-width="26"
+                stroke-linecap="round"
+              />
+              <path
+                data-rail-train
+                class="rail-train"
+                d="M-10,20 H15 C70,20 70,140 125,140 H295"
+                stroke-width="26"
+                stroke-linecap="round"
+              />
+              <circle
+                cx="295"
+                cy="140"
+                r="5"
+                fill="#232120"
+              />
+            </svg>
+            <svg
+              class="typology-modes__line typology-modes__line--green"
+              data-rail-svg
+              viewBox="0 0 320 160"
+              fill="none"
+            >
+              <path
+                d="M18,20 H195 C250,20 262,140 320,140 H340"
+                stroke="#00a36c"
+                stroke-width="26"
+                stroke-linecap="round"
+              />
+              <path
+                data-rail-train
+                class="rail-train"
+                d="M18,20 H195 C250,20 262,140 320,140 H340"
+                stroke-width="26"
+                stroke-linecap="round"
+              />
+              <circle
+                cx="224"
+                cy="32"
+                r="5"
+                fill="#ffffff"
+              />
+            </svg>
           </div>
         </div>
       </section>
 
-      <section class="typology-types">
-        <div class="container mx-auto py-24">
+      <!-- Typology tabs: hidden for now (replaced by .typology-modes above).
+           Remove the `hidden` attribute to show it again. -->
+      <section
+        class="typology-types"
+        hidden
+      >
+        <div class="container mx-auto pt-16 md:pt-20 pb-24 px-6 md:px-8">
           <h3 class="typology__title-section">
             <span class="typology-tabs__dot-anchor">Tipos</span>
             <span class="typology-tabs__dot-anchor">de</span>
@@ -686,7 +880,7 @@
                 data-panel="0"
               >
                 <div class="typology-detail">
-                  <div class="grid grid-cols-2 items-center gap-4">
+                  <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-6 lg:gap-4">
                     <img
                       src="/img/tipologias/uno/tipologia-1.1.png"
                       alt="Tipologia uno"
@@ -738,7 +932,7 @@
               >
                 <div class="typology-tabs__panel-inner">
                   <div class="typology-detail">
-                    <div class="grid grid-cols-2 items-center gap-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-6 lg:gap-4">
                       <img
                         src="/img/tipologias/dos/tipologia-2.png"
                         alt="Tipologia uno"
@@ -791,7 +985,7 @@
               >
                 <div class="typology-tabs__panel-inner">
                   <div class="typology-detail">
-                    <div class="grid grid-cols-2 items-center gap-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-6 lg:gap-4">
                       <img
                         src="/img/tipologias/tres/tipologia-3.png"
                         alt="Tipologia uno"
@@ -843,7 +1037,7 @@
       </section>
 
       <section class="ubicacion">
-        <div class="container mx-auto py-24">
+        <div class="container mx-auto py-24 px-6 md:px-8">
           <div
             class="grid grid-cols-1 md:grid-cols-12 gap-x-16 gap-y-12 items-center"
           >
@@ -1871,7 +2065,7 @@
       </section>
     </main>
     <footer class="site-footer">
-      <div class="container mx-auto">
+      <div class="container mx-auto px-6 md:px-8">
         <div class="site-footer__brands">
           <img
             class="site-footer__ar-logo"
@@ -1929,7 +2123,7 @@
       </div>
 
       <div class="site-footer__tags">
-        <div class="container mx-auto flex justify-between">
+        <div class="container mx-auto flex justify-between px-6 md:px-8">
           <span class="site-footer__tag">
             ESTACIÓN
             <em>77</em>
@@ -1944,6 +2138,32 @@
         </div>
       </div>
     </footer>
+    <a
+      class="whatsapp-float"
+      href="https://wa.me/573132539229?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Estaci%C3%B3n%2077"
+      target="_blank"
+      rel="noopener"
+      aria-label="Contáctanos por WhatsApp"
+    >
+      <span class="whatsapp-float__inner">
+        <svg
+          class="whatsapp-float__icon"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+        >
+          <path
+            fill="#fff"
+            d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3z"
+          />
+          <path
+            fill="#3a3a3a"
+            transform="translate(8.6 8.6) scale(0.6)"
+            d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
+          />
+        </svg>
+      </span>
+    </a>
+
     <script src="./js/hero-window.js?v=20260922"></script>
     <script src="./js/hero-parallax.js?v=20260922"></script>
     <script src="./js/hero-split-flap.js?v=20260922"></script>
@@ -1953,5 +2173,6 @@
     <script src="./js/map-animation.js?v=20260922"></script>
     <script src="./js/typology-slider.js?v=20260922"></script>
     <script src="./js/typology-tabs.js?v=20260922"></script>
+    <script src="./js/floorplan-zoom.js?v=20260922"></script>
   </body>
 </html>

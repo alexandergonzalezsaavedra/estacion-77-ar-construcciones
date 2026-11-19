@@ -64,6 +64,25 @@
     --darkred-color: #dd180d;
     --black-color: #232120;
     --light-blue-color: #bee3ee;
+    /* Metro line colors (Residencial / Hotelero / Senior) */
+    --metro-blue: #7cc6e2;
+    --metro-purple: #6a3d9a;
+    --metro-green: #00a36c;
+    --metro-gradient: linear-gradient(
+        90deg,
+        var(--metro-green) 0%,
+        var(--metro-purple) 55%,
+        var(--metro-blue) 100%
+    );
+    --text-light: #e8e4df;
+
+    /* Type scale for all content sections (the hero/banners have their own).
+       Use these instead of fixed sizes so every section matches. */
+    --fs-title: clamp(28px, 3.5vw, 50px); /* section titles, big figures */
+    --fs-subtitle: clamp(22px, 2.4vw, 34px); /* subtitles, card titles */
+    --fs-body: clamp(17px, 1.35vw, 20px); /* paragraphs: 17px on phones/tablets, up to 20px on desktop */
+    --fs-small: 14px; /* notes, labels, legal */
+    --lh-body: 1.5;
 }
 html {
     overflow-x: hidden;
@@ -80,19 +99,48 @@ body {
 }
 .site-header {
     background: var(--bg-primary);
-    position: absolute;
+    position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
+    z-index: 100;
 }
 .site-header__inner {
     gap: 24px;
-    padding: 40px 24px 24px;
-    border-bottom: 1px solid #3a3a3a;
+    padding: 32px 24px;
 }
 .site-header__logo {
     display: block;
+    flex: none;
     height: 58px;
     width: auto;
+}
+/* Pills menu: only where it fits next to both logos (desktop). On smaller
+   screens the same three pills are shown in the hero. */
+.site-header__nav {
+    display: none;
+    align-items: center;
+    gap: clamp(12px, 1.5vw, 20px);
+    animation: header-nav-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+.site-header__nav .mode-pill {
+    font-size: clamp(13px, 1.1vw, 16px);
+    padding: 0.85em 1.4em;
+}
+@media (min-width: 1024px) {
+    .site-header__nav {
+        display: flex;
+    }
+}
+@keyframes header-nav-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 .site-header__logo--ar {
     animation: header-logo-left 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -134,33 +182,64 @@ body {
     min-height: 100dvh;
     display: flex;
     align-items: center;
+    /* Top padding clears the fixed header (~122px desktop/tablet, ~62px phone). */
+    padding: 150px 0 64px;
+    overflow: hidden;
 }
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
     .hero-banner {
-        padding: 120px 0 56px;
+        min-height: auto;
+        padding: 150px 0 56px;
+        align-items: flex-start;
     }
+}
+@media (max-width: 640px) {
+    .hero-banner {
+        padding-top: 88px;
+    }
+}
+
+/* Image group flush to the left edge, content centered on the right */
+.hero-banner__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 40px;
+    width: 100%;
 }
 @media (min-width: 1024px) {
-    .hero-banner__container {
-        max-width: 1100px;
+    .hero-banner__layout {
+        grid-template-columns: minmax(0, 47fr) minmax(0, 53fr);
+        align-items: center;
     }
 }
-@media (min-width: 1280px) {
-    .hero-banner__container {
-        max-width: 1440px;
+.hero-banner__media {
+    padding-right: 24px;
+}
+@media (min-width: 1024px) {
+    .hero-banner__media {
+        padding-right: 0;
     }
 }
-@media (min-width: 1536px) {
-    .hero-banner__container {
-        max-width: 1680px;
+.hero-banner__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 24px;
+}
+@media (min-width: 1024px) {
+    .hero-banner__content {
+        padding: 0 clamp(24px, 4vw, 80px);
     }
 }
+
 .hero-window {
     display: block;
-    width: 112%;
-    margin-left: -6%;
+    width: 100%;
     will-change: transform, opacity;
     transform-style: preserve-3d;
+    /* Tilt and scale pivot on the left edge so the bleed never opens a gap. */
+    transform-origin: left center;
     opacity: 0;
     transform: translateY(30px) scale(0.94);
 }
@@ -168,35 +247,59 @@ body {
     display: block;
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.25));
 }
-@media (max-width: 767px) {
-    .hero-window {
-        width: 100%;
-        margin-left: 0;
-    }
+.hero-window__caption {
+    font-family: var(--font-principal);
+    font-size: 11px;
+    font-weight: 500;
+    fill: #fff;
 }
+
+/* Logo: the PNG's own "Tu hogar, tu ciudad" line is clipped away (the "7" is
+   kept) and replaced by the HTML tagline below. */
 .hero-banner__logo-estacion {
-    width: 90%;
+    position: relative;
+    width: min(78%, 600px);
+    container-type: inline-size;
     opacity: 0;
     transform: translateY(-110px) scale(0.96);
     filter: blur(6px);
     will-change: transform, opacity, filter;
 }
+@media (max-width: 1023px) {
+    .hero-banner__logo-estacion {
+        width: min(90%, 520px);
+    }
+}
+.hero-banner__logo-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 86% 100%, 86% 88%, 0 88%);
+}
+.hero-banner__logo-tagline {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin: 0;
+    font-family: var(--font-principal);
+    font-weight: 500;
+    font-size: 2.35cqw;
+    line-height: 1;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--black-color);
+}
 .hero-banner__h2 {
+    margin: clamp(40px, 5vw, 64px) 0 clamp(32px, 3.5vw, 48px);
     font-family: var(--font-led);
     font-weight: 500;
-    font-size: 2rem;
+    font-size: clamp(1.1rem, 1.55vw, 1.6rem);
     letter-spacing: 0.06em;
-    line-height: 2rem;
+    line-height: 1.35;
     color: #3a3a3a;
     perspective: 400px;
-}
-@media (max-width: 640px) {
-    .hero-banner__h2 {
-        font-size: 1.15rem;
-        line-height: 1.5rem;
-    }
 }
 .flap-line {
     display: inline-block;
@@ -228,24 +331,64 @@ body {
         transform: rotateX(0deg);
     }
 }
-.hero-banner__link {
-    display: inline-block;
-    font-family: var(--font-principal);
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.04em;
-    background: var(--red-color);
-    padding: 18px 40px;
-    border-radius: 50px;
-    color: white;
-    text-decoration: none;
+/* Residencial / Hotelero / Senior pills (revealed by hero-parallax.js) */
+.hero-banner__modes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(12px, 1.5vw, 22px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
     opacity: 0;
     transform: translateY(18px);
     will-change: transform, opacity;
-    transition: background 0.3s;
 }
-.hero-banner__link:hover {
-    background: var(--darkred-color);
+/* Shared pill: used in the header menu and the hero */
+.mode-pill {
+    --mode-color: #7cc6e2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9em;
+    padding: 0.7em 1.25em;
+    border: 2px solid var(--mode-color);
+    border-radius: 999px;
+    font-family: var(--font-principal);
+    font-weight: 700;
+    font-size: clamp(14px, 1.4vw, 20px);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--black-color);
+    text-decoration: none;
+}
+.mode-pill__dot {
+    flex: none;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: var(--mode-color);
+}
+.mode-pill--residencial {
+    --mode-color: #7cc6e2;
+}
+.mode-pill--hotelero {
+    --mode-color: #6a3d9a;
+}
+.mode-pill--senior {
+    --mode-color: #00a36c;
+}
+a.mode-pill {
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+a.mode-pill:hover,
+a.mode-pill:focus-visible {
+    background: var(--mode-color);
+    color: #fff;
+}
+a.mode-pill:hover .mode-pill__dot,
+a.mode-pill:focus-visible .mode-pill__dot {
+    background: #fff;
 }
 .intro {
     background: var(--black-color);
@@ -296,73 +439,120 @@ body {
 
 .intro__title {
     position: relative;
-    margin: 0 0 8px;
-    color: #fff;
-    font-weight: 400;
+    margin: 0 0 12px;
+    color: var(--text-light);
+    font-weight: 300;
 }
 .intro__title-row {
     position: relative;
     display: inline-block;
-    font-size: 34px;
+    font-size: var(--fs-subtitle);
+    line-height: 1.15;
     text-transform: uppercase;
     letter-spacing: 0.08em;
 }
 .intro__title-highlight {
     display: block;
     overflow-wrap: break-word;
-    margin-top: 4px;
-    font-size: 42px;
+    margin-top: 18px;
+    font-size: var(--fs-title);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+.intro__title-highlight strong {
     font-weight: 700;
-    letter-spacing: 0.01em;
 }
 .intro__dot {
     position: absolute;
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: var(--red-color);
 }
+/* Light blue: above "PARTA" */
 .intro__dot--1 {
-    top: -6px;
-    left: -18px;
+    top: -22px;
+    left: 40%;
+    background: var(--metro-blue);
 }
+/* Purple: under "CON" */
 .intro__dot--2 {
-    top: -10px;
-    right: -18px;
+    top: 54%;
+    right: 12%;
+    background: var(--metro-purple);
+}
+/* Green: before "ÁREAS" */
+.intro__dot--3 {
+    top: 76%;
+    left: -16px;
+    background: var(--metro-green);
 }
 @media (max-width: 767px) {
-    .intro__title-row {
-        font-size: 22px;
-    }
     .intro__title-highlight {
-        font-size: 28px;
-    }
-    .intro__subtitle {
-        font-size: 20px;
+        margin-top: 12px;
     }
 }
 
 .intro__subtitle {
-    margin: 0 0 12px;
-    color: var(--light-blue-color);
-    font-size: 26px;
+    margin: 0 0 18px;
+    color: var(--text-light);
+    font-size: var(--fs-small);
     font-weight: 400;
+    letter-spacing: 0.04em;
 }
 
 .intro__description {
     max-width: 520px;
     overflow-wrap: break-word;
-    color: var(--light-blue-color);
-    font-size: 17px;
-    line-height: 1.5;
+    color: var(--text-light);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
 }
 
+/* Form card: original size, wrapped in an animated metro-colors border.
+   The gradient lives on an oversized rotating square behind the card, so
+   only the 5px ring around the form shows it. */
 .intro__content-form {
-    background: var(--light-blue-color);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 5px;
     border-radius: 32px;
-    padding: 22px;
     color: var(--black-color);
     text-align: center;
+}
+.intro__content-form::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    width: 300%;
+    aspect-ratio: 1;
+    background: conic-gradient(
+        var(--metro-green),
+        var(--metro-purple),
+        var(--metro-blue),
+        var(--metro-purple),
+        var(--metro-green)
+    );
+    transform: translate(-50%, -50%);
+    animation: form-border-spin 4s linear infinite;
+}
+@keyframes form-border-spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .intro__content-form::before {
+        animation: none;
+    }
+}
+.intro__form {
+    padding: 22px;
+    border-radius: 27px;
+    background: var(--bg-primary);
 }
 .intro__form-title {
     margin: 0 0 4px;
@@ -393,13 +583,21 @@ body {
     border: none;
     border-radius: 8px;
     background: #fff;
-    color: #333;
+    color: var(--black-color);
     font-family: var(--font-principal);
     font-size: 15px;
     text-align: left;
 }
+.intro__field::placeholder {
+    color: var(--black-color);
+    opacity: 1;
+}
+.intro__field:focus {
+    outline: 2px solid var(--metro-purple);
+    outline-offset: -1px;
+}
 select.intro__field {
-    color: #666;
+    color: var(--black-color);
 }
 .intro__checkbox {
     display: flex;
@@ -411,14 +609,30 @@ select.intro__field {
     cursor: pointer;
 }
 .intro__checkbox input[type="checkbox"] {
+    flex: none;
+    appearance: none;
+    -webkit-appearance: none;
     width: 14px;
     height: 14px;
-    accent-color: var(--red-color);
+    margin: 0;
+    border: 2px solid var(--metro-green);
     border-radius: 50%;
+    background: #fff;
     cursor: pointer;
+}
+.intro__checkbox input[type="checkbox"]:checked {
+    background: var(--metro-green);
+    box-shadow: inset 0 0 0 2px #fff;
+}
+.intro__checkbox input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--metro-purple);
+    outline-offset: 2px;
 }
 .intro__terms-link {
     color: inherit;
+    text-decoration: none;
+}
+.intro__terms-link:hover {
     text-decoration: underline;
 }
 .intro__submit {
@@ -453,21 +667,25 @@ select.intro__field {
     width: 48px;
     height: auto;
     margin-bottom: 12px;
+    /* The PNGs are light blue; render them white as in the design. */
+    filter: brightness(0) invert(1);
 }
 .intro__feature-text {
     max-width: 300px;
-    color: var(--light-blue-color);
+    color: var(--text-light);
     font-family: var(--font-led);
-    font-size: 15px;
+    font-size: var(--fs-body);
     letter-spacing: 0.05em;
-    line-height: 1.6;
+    line-height: var(--lh-body);
     text-transform: uppercase;
 }
 
 .typology {
-    background-color: var(--light-blue-color);
+    background-color: var(--bg-primary);
     min-height: 100dvh;
-    border-top: solid 40px var(--red-color);
+    /* 40px top band in the metro colors (was solid red) */
+    border-top: 40px solid;
+    border-image: var(--metro-gradient) 1;
     position: relative;
     z-index: 50;
 }
@@ -476,35 +694,181 @@ select.intro__field {
         min-height: 0;
     }
 }
-.typology__line-seven {
-    position: absolute;
-    width: 20%;
-    top: -10rem;
-    left: -8rem;
+.typology__content {
+    position: relative;
+    z-index: 1;
 }
+
+/* Blurred metro-colors glow on the left edge */
+.typology__glow-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    /* Fade out toward the bottom: the next section has the same background,
+       so a clipped glow would show a hard edge. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 96%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 96%);
+}
+/* Animated glow: the three gradient colors rotate through the metro palette
+   (registered custom properties make the colors interpolate smoothly) while
+   the blob drifts and breathes. `translate`/`scale` are used instead of
+   `transform` because typology-parallax.js writes `transform` inline. */
+@property --glow-a {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #00a36c;
+}
+@property --glow-b {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #6a3d9a;
+}
+@property --glow-c {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #7cc6e2;
+}
+.typology__glow,
+.typology__glow-wrap::before {
+    --glow-a: var(--metro-green);
+    --glow-b: var(--metro-purple);
+    --glow-c: var(--metro-blue);
+}
+.typology__glow {
+    position: absolute;
+    top: 12%;
+    left: -14%;
+    width: 42%;
+    height: 95%;
+    background:
+        radial-gradient(ellipse 45% 40% at 30% 42%, var(--glow-a) 0%, transparent 100%),
+        radial-gradient(ellipse 30% 22% at 62% 30%, var(--glow-b) 0%, transparent 100%),
+        radial-gradient(ellipse 45% 30% at 58% 92%, var(--glow-c) 0%, transparent 100%);
+    filter: blur(40px);
+    opacity: 0.95;
+    animation:
+        glow-colors 18s ease-in-out infinite,
+        glow-drift 22s ease-in-out infinite alternate;
+}
+/* Second, softer glow on the right behind the slider, on its own rhythm */
+.typology__glow-wrap::before {
+    content: "";
+    position: absolute;
+    right: -12%;
+    bottom: -10%;
+    width: 38%;
+    height: 70%;
+    background:
+        radial-gradient(ellipse 45% 40% at 60% 55%, var(--glow-c) 0%, transparent 100%),
+        radial-gradient(ellipse 30% 25% at 35% 30%, var(--glow-b) 0%, transparent 100%);
+    filter: blur(60px);
+    opacity: 0.55;
+    animation:
+        glow-colors 18s ease-in-out -9s infinite,
+        glow-drift-right 26s ease-in-out infinite alternate;
+}
+@keyframes glow-colors {
+    0%,
+    100% {
+        --glow-a: #00a36c;
+        --glow-b: #6a3d9a;
+        --glow-c: #7cc6e2;
+    }
+    33% {
+        --glow-a: #6a3d9a;
+        --glow-b: #7cc6e2;
+        --glow-c: #00a36c;
+    }
+    66% {
+        --glow-a: #7cc6e2;
+        --glow-b: #00a36c;
+        --glow-c: #6a3d9a;
+    }
+}
+@keyframes glow-drift {
+    0% {
+        translate: 0 0;
+        scale: 1;
+    }
+    50% {
+        translate: 8% -6%;
+        scale: 1.12;
+    }
+    100% {
+        translate: 3% 8%;
+        scale: 0.94;
+    }
+}
+@keyframes glow-drift-right {
+    0% {
+        translate: 0 0;
+        scale: 1;
+    }
+    50% {
+        translate: -10% -12%;
+        scale: 1.15;
+    }
+    100% {
+        translate: -4% 4%;
+        scale: 0.9;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .typology__glow,
+    .typology__glow-wrap::before {
+        animation: none;
+    }
+}
+@media (max-width: 767px) {
+    .typology__glow {
+        left: -35%;
+        width: 80%;
+        height: 70%;
+    }
+    .typology__glow-wrap::before {
+        width: 70%;
+        height: 45%;
+        right: -30%;
+    }
+}
+
+/* Light blue rail: comes down from the section above, then turns right
+   over the slider and leaves the screen. */
 .typology__line-end {
     position: absolute;
-    width: 20%;
+    z-index: 2;
+    /* Anchored to the right edge of the screen so it never crosses the
+       content of the section above. The vertical stretch sits --rail-gap from
+       the edge (it is 8.1% into the SVG) and the horizontal end runs off-screen. */
+    --rail-w: clamp(220px, 20vw, 380px);
+    --rail-gap: clamp(40px, 6vw, 120px);
+    width: var(--rail-w);
     top: -10rem;
-    right: -8rem;
+    right: calc(var(--rail-gap) - var(--rail-w) * 0.919);
+    pointer-events: none;
 }
 .typology__line-svg {
     display: block;
     width: 100%;
     height: auto;
 }
+@media (max-width: 767px) {
+    /* Phones: behind the content and pushed to the edge so it doesn't cross the title */
+    .typology__line-end {
+        z-index: 0;
+        --rail-w: 160px;
+        --rail-gap: 12px;
+        top: -6rem;
+    }
+}
 .rail-train {
     fill: none;
     animation: rail-dash 3s linear infinite;
 }
-.typology__line-seven .rail-train {
-    animation-name: rail-dash, rail-glow-on-dark;
-}
 .typology__line-end .rail-train {
-    animation-name: rail-dash, rail-glow-on-red;
-}
-.typology__line-seven .rail-train,
-.typology__line-end .rail-train {
+    animation-name: rail-dash, rail-glow-on-blue;
     animation-duration: 3s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
@@ -517,51 +881,78 @@ select.intro__field {
         stroke-dashoffset: var(--dash-end, 0px);
     }
 }
-@keyframes rail-glow-on-dark {
+@keyframes rail-glow-on-blue {
     0%,
     100% {
-        stroke: #f4efe6;
+        stroke: #ffffff;
     }
     50% {
-        stroke: var(--red-color);
+        stroke: #e3f4fa;
     }
 }
-@keyframes rail-glow-on-red {
-    0%,
-    100% {
-        stroke: #f4efe6;
-    }
-    50% {
-        stroke: var(--black-color);
-    }
-}
+
 .typology__title-section {
     display: block;
     overflow-wrap: break-word;
     margin-top: 4px;
-    font-size: 50px;
+    font-size: var(--fs-title);
     font-weight: 700;
     letter-spacing: 0.01em;
     text-align: center;
-    line-height: 44px;
+    line-height: 1.05;
 }
-@media (max-width: 640px) {
-    .typology__title-section {
-        font-size: 28px;
-        line-height: 32px;
+/* Gallery title: centered inline block so the dots can sit around the text */
+.typology__title-section--dots {
+    position: relative;
+    display: table;
+    margin-inline: auto;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--black-color);
+}
+.typology__title-dot {
+    position: absolute;
+    width: 0.24em;
+    height: 0.24em;
+    max-width: 12px;
+    max-height: 12px;
+    border-radius: 50%;
+}
+.typology__title-dot--purple {
+    top: 2%;
+    left: 59%;
+    background: var(--metro-purple);
+}
+.typology__title-dot--green {
+    top: 52%;
+    left: 17%;
+    background: var(--metro-green);
+}
+.typology__title-dot--blue {
+    top: 66%;
+    left: calc(100% + 0.4em);
+    background: var(--metro-blue);
+}
+/* Phones: the lines wrap differently, so only the top dot still lands right */
+@media (max-width: 767px) {
+    .typology__title-dot--green,
+    .typology__title-dot--blue {
+        display: none;
     }
 }
+
+/* Slider: one large image at a time; slides cross-fade with a short shift. */
 .typology__slider {
-    --card-w: 76%;
-    --card-scale: 0.82;
-    --side-shift: -11.8%;
     position: relative;
-    margin-top: 40px;
-    padding-bottom: 44px;
+    max-width: 1400px;
+    margin: clamp(28px, 3vw, 40px) auto 0;
+    border-radius: 18px;
+    overflow: hidden;
+    isolation: isolate;
 }
 .typology__track {
     position: relative;
-    height: min(70dvh, 620px);
+    aspect-ratio: 16 / 9;
     touch-action: pan-y;
     user-select: none;
     -webkit-user-select: none;
@@ -571,49 +962,37 @@ select.intro__field {
     cursor: grabbing;
 }
 .typology__track.is-dragging .typology__slide {
-    transition:
-        filter 0.7s ease,
-        opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 .typology__slide {
     position: absolute;
-    top: 0;
-    left: calc((100% - var(--card-w)) / 2);
-    width: var(--card-w);
-    height: 100%;
+    inset: 0;
     overflow: hidden;
-    border-radius: 28px;
     opacity: 0;
     pointer-events: none;
     z-index: 1;
-    transform: perspective(1400px) translateX(0) scale(0.6) rotateY(0deg);
-    filter: brightness(0.6);
+    transform: perspective(1400px) translateX(0) scale(0.97);
     transition:
         transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 0.5s ease,
-        filter 0.7s ease;
-    will-change: transform;
+        opacity 0.6s ease;
+    will-change: transform, opacity;
 }
 .typology__slide.is-jump {
     transition: none;
 }
 .typology__slide.is-prev {
-    opacity: 1;
     z-index: 2;
-    transform: perspective(1400px) translateX(var(--side-shift)) scale(var(--card-scale)) rotateY(10deg);
+    transform: perspective(1400px) translateX(-6%) scale(0.97);
 }
 .typology__slide.is-next {
-    opacity: 1;
     z-index: 2;
-    transform: perspective(1400px) translateX(calc(var(--side-shift) * -1)) scale(var(--card-scale)) rotateY(-10deg);
+    transform: perspective(1400px) translateX(6%) scale(0.97);
 }
 .typology__slide.is-active {
     opacity: 1;
     z-index: 3;
     pointer-events: auto;
-    filter: none;
     transform: perspective(1400px) translateX(0) scale(1) rotateY(0deg);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
 }
 .typology__slide img {
     -webkit-user-drag: none;
@@ -622,39 +1001,34 @@ select.intro__field {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: translateX(0) scale(1.25);
+    transform: scale(1.12);
     translate: var(--dx, 0px) var(--sy, 0px);
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform, translate;
 }
-.typology__slide.is-prev img {
-    transform: translateX(5%) scale(1.25);
-}
-.typology__slide.is-next img {
-    transform: translateX(-5%) scale(1.25);
-}
 .typology__slide.is-jump img {
     transition: none;
 }
-.typology__slide::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.1) 45%, rgba(0, 0, 0, 0.45));
-    pointer-events: none;
-}
+
+/* Dark caption bar: amenity name + Residencial / Hotelero / Senior legend */
 .typology__caption {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    right: 3%;
+    bottom: 9%;
     z-index: 1;
     display: flex;
-    justify-content: center;
-    padding: 0 24px 32px;
-    text-align: center;
-    color: #fff;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 32px;
+    width: min(70%, 820px);
+    padding: 0.85em 1.6em;
+    border-radius: 999px;
+    background: rgba(24, 22, 22, 0.92);
+    color: var(--bg-primary);
+    font-family: var(--font-led);
+    font-size: clamp(12px, 1.25vw, 17px);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     opacity: 0;
     transform: translateY(16px);
     transition:
@@ -668,66 +1042,121 @@ select.intro__field {
 }
 .typology__caption-title {
     margin: 0;
-    font-size: clamp(24px, 3vw, 44px);
-    font-weight: 700;
+    font-size: 1em;
+    font-weight: 400;
     line-height: 1;
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
 }
+.typology__caption-modes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em 0.9em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.typology__caption-modes li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    line-height: 1;
+}
+.typology__caption-dot {
+    flex: none;
+    width: 1.05em;
+    height: 1.05em;
+    border-radius: 50%;
+}
+.typology__caption-dot--residencial {
+    background: var(--metro-blue);
+}
+.typology__caption-dot--hotelero {
+    background: var(--metro-purple);
+}
+.typology__caption-dot--senior {
+    background: var(--metro-green);
+}
+.typology__note {
+    position: absolute;
+    left: 3%;
+    bottom: 4%;
+    z-index: 4;
+    color: #fff;
+    font-size: 10px;
+    pointer-events: none;
+}
+
 @media (max-width: 767px) {
     .typology__slider {
-        --card-w: 84%;
-        --card-scale: 0.8;
-        --side-shift: -12.4%;
+        border-radius: 14px;
     }
     .typology__track {
-        height: min(60dvh, 440px);
+        aspect-ratio: 4 / 5;
     }
     .typology__caption {
-        padding-bottom: 24px;
+        left: 12px;
+        right: 12px;
+        bottom: 44px;
+        width: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 14px 18px;
+        border-radius: 18px;
+    }
+    .typology__note {
+        bottom: 14px;
+        left: 14px;
     }
 }
+
 .typology__arrow {
     position: absolute;
     z-index: 5;
-    top: calc(50% - 22px);
+    top: 50%;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border: none;
-    border-radius: 50%;
-    background: rgba(35, 33, 32, 0.6);
+    background: none;
     color: #fff;
-    font-size: 16px;
+    font-size: clamp(26px, 2.6vw, 40px);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
     cursor: pointer;
-    transition: background 0.3s;
+    transition: transform 0.25s ease, opacity 0.25s ease;
 }
 .typology__arrow:hover {
-    background: var(--red-color);
+    opacity: 0.85;
 }
 .typology__arrow--prev {
-    left: 20px;
+    left: 1.5%;
 }
 .typology__arrow--next {
-    right: 20px;
+    right: 1.5%;
+}
+.typology__arrow--prev:hover {
+    transform: translateY(-50%) translateX(-3px);
+}
+.typology__arrow--next:hover {
+    transform: translateY(-50%) translateX(3px);
 }
 .typology__dots {
     position: absolute;
+    z-index: 5;
     left: 50%;
-    bottom: 10px;
+    bottom: 3.5%;
     transform: translateX(-50%);
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 .typology__dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border: none;
     border-radius: 50%;
-    background: rgba(35, 33, 32, 0.3);
+    background: rgba(255, 255, 255, 0.55);
     padding: 0;
     cursor: pointer;
     transition:
@@ -735,28 +1164,111 @@ select.intro__field {
         transform 0.3s;
 }
 .typology__dot.is-active {
-    background: var(--red-color);
-    transform: scale(1.3);
+    background: #fff;
+    transform: scale(1.2);
+}
+@media (max-width: 767px) {
+    .typology__dots {
+        bottom: 18px;
+        left: auto;
+        right: 16px;
+        transform: none;
+    }
+}
+
+/* "Conoce más de las tres formas de vivir" + metro lines.
+   Lives inside .typology so the animated glow continues behind it. */
+.typology-modes {
+    position: relative;
+    z-index: 1;
+    padding-bottom: clamp(48px, 6vw, 96px);
+}
+.typology-modes__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(20px, 2vw, 28px);
+    text-align: center;
+}
+.typology-modes__title {
+    margin: 0;
+    font-size: var(--fs-subtitle);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--black-color);
+}
+.typology-modes__title strong {
+    font-weight: 700;
+}
+.typology-modes__pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(12px, 2vw, 28px);
+}
+
+/* Lines scale with --lw (the width of each curved piece); the purple line's
+   position and thickness are derived from the same 320×90 SVG grid. */
+.typology-modes__lines {
+    --lw: min(320px, 46vw);
+    position: relative;
+    width: 100%;
+    /* 26 units of stroke on a 320×160 grid: same thickness on all three lines.
+       Blue/green run at y=20 and y=140, the purple line at y=80, leaving
+       clear space between them as in the design. */
+    --lt: calc(var(--lw) * 26 / 320);
+    height: calc(var(--lw) * 160 / 320);
+    margin-top: clamp(32px, 4vw, 56px);
+    overflow: hidden;
+}
+/* Full-width straight line, centered on y=80 of the grid */
+.typology-modes__line-purple {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: calc(var(--lw) * 80 / 320 - var(--lt) / 2);
+    height: var(--lt);
+    display: block;
+    overflow: visible;
+}
+.typology-modes__line-purple line {
+    stroke-width: var(--lt);
+}
+/* Same moving light as the rail above */
+.typology-modes .rail-train {
+    animation-name: rail-dash, rail-glow-on-blue;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+.typology-modes__line-purple .rail-train {
+    animation-duration: 6s;
+}
+@media (prefers-reduced-motion: reduce) {
+    .typology-modes .rail-train,
+    .typology__line-end .rail-train {
+        animation: none;
+        stroke: none;
+    }
+}
+.typology-modes__line {
+    position: absolute;
+    top: 0;
+    width: var(--lw);
+    height: auto;
+    overflow: visible;
+}
+.typology-modes__line--blue {
+    left: 0;
+}
+.typology-modes__line--green {
+    right: 0;
 }
 @media (min-width: 768px) {
-    .intro__title-row {
-        font-size: 34px;
-    }
-    .intro__title-highlight {
-        font-size: 50px;
-    }
-    .intro__subtitle {
-        font-size: 28px;
-    }
-    .intro__description {
-        font-size: 18px;
-    }
     .intro__feature img {
         width: 56px;
         height: auto;
-    }
-    .intro__feature-text {
-        font-size: 16px;
     }
     .intro__features {
         margin-top: 36px;
@@ -864,15 +1376,6 @@ select.intro__field {
 .typology-tabs__panel.is-active {
     display: block;
 }
-.typology-tabs__panel-inner {
-    /* border: 1px dashed rgba(35, 33, 32, 0.3); */
-    border-radius: 24px;
-    padding: 64px 24px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--black-color);
-}
 .typology-detail__floorplan {
     display: block;
     width: 100%;
@@ -902,6 +1405,177 @@ select.intro__field {
         animation-delay: 0s;
     }
 }
+.typology-detail__floorplan {
+    cursor: zoom-in;
+}
+
+/* Floating WhatsApp button with animated color border */
+.whatsapp-float {
+    position: fixed;
+    right: calc(clamp(16px, 2.5vw, 32px) + env(safe-area-inset-right, 0px));
+    bottom: calc(clamp(16px, 2.5vw, 32px) + env(safe-area-inset-bottom, 0px));
+    z-index: 150;
+    display: block;
+    width: clamp(60px, 5vw, 72px);
+    aspect-ratio: 1;
+    padding: 3px;
+    border-radius: 50%;
+    overflow: hidden;
+    isolation: isolate;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.25s ease;
+    animation: whatsapp-float-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1s backwards;
+}
+.whatsapp-float::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    z-index: -1;
+    background: conic-gradient(
+        #6b3fa0,
+        #3b5bdb,
+        #22b8cf,
+        #40c057,
+        #22b8cf,
+        #3b5bdb,
+        #6b3fa0
+    );
+    animation: whatsapp-border-spin 3s linear infinite;
+}
+.whatsapp-float__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #3a3a3a;
+}
+.whatsapp-float__icon {
+    width: 52%;
+    height: 52%;
+}
+.whatsapp-float:hover,
+.whatsapp-float:focus-visible {
+    transform: scale(1.08);
+}
+.whatsapp-float:focus-visible {
+    outline: 2px solid var(--red-color);
+    outline-offset: 4px;
+}
+@keyframes whatsapp-border-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes whatsapp-float-in {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .whatsapp-float,
+    .whatsapp-float::before {
+        animation: none;
+    }
+}
+
+/* Floor plan lightbox */
+.floorplan-zoom-open,
+.floorplan-zoom-open body {
+    overflow: hidden;
+}
+.floorplan-zoom {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(20, 18, 17, 0.94);
+    animation: floorplan-zoom-in 0.25s ease-out both;
+}
+.floorplan-zoom__scroller {
+    position: absolute;
+    inset: 0;
+    padding: calc(clamp(64px, 9vh, 96px) + env(safe-area-inset-top, 0px))
+        clamp(0px, 4vw, 96px) calc(48px + env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+    overflow: auto;
+    display: flex;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-x pan-y;
+}
+.floorplan-zoom__img {
+    display: block;
+    flex: none;
+    margin: auto;
+    max-width: none;
+    height: auto;
+    background: #fff;
+    border-radius: 12px;
+    cursor: zoom-in;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.floorplan-zoom.is-zoomed .floorplan-zoom__img {
+    border-radius: 0;
+    cursor: grab;
+}
+.floorplan-zoom.is-dragging .floorplan-zoom__img {
+    cursor: grabbing;
+}
+.floorplan-zoom__close {
+    position: absolute;
+    top: calc(clamp(12px, 3vw, 40px) + env(safe-area-inset-top, 0px));
+    right: calc(clamp(16px, 3vw, 48px) + env(safe-area-inset-right, 0px));
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(44px, 4vw, 56px);
+    height: clamp(44px, 4vw, 56px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    border: none;
+    border-radius: 50%;
+    background: var(--red-color);
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+.floorplan-zoom__close:hover {
+    background: var(--darkred-color);
+    transform: scale(1.06);
+}
+.floorplan-zoom__hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    margin: 0;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.7);
+    pointer-events: none;
+}
+.floorplan-zoom.is-zoomed .floorplan-zoom__hint {
+    opacity: 0;
+}
+@keyframes floorplan-zoom-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .typology-specs {
     display: flex;
     margin-top: 40px;
@@ -924,7 +1598,7 @@ select.intro__field {
     margin: 0 0 10px;
     color: var(--red-color);
     font-weight: 700;
-    font-size: 14px;
+    font-size: var(--fs-small);
     letter-spacing: 0.03em;
     text-transform: uppercase;
 }
@@ -1019,9 +1693,9 @@ select.intro__field {
     gap: 14px;
     margin: 12px 0 0 6%;
     color: var(--black-color);
-    font-size: clamp(17px, 1.6vw, 22px);
+    font-size: var(--fs-body);
     font-weight: 400;
-    line-height: 1.15;
+    line-height: var(--lh-body);
 }
 .ubicacion__arrow {
     flex: none;
@@ -1137,18 +1811,18 @@ select.intro__field {
 .site-footer__heading {
     margin: 0 0 12px;
     font-weight: 700;
-    font-size: 16px;
+    font-size: var(--fs-body);
     color: var(--black-color);
 }
 .site-footer__text {
     margin: 0 0 4px;
-    font-size: 15px;
-    line-height: 1.5;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
     color: var(--black-color);
 }
 .site-footer__copy {
     margin: 0 0 40px;
-    font-size: 14px;
+    font-size: var(--fs-small);
     color: rgba(35, 33, 32, 0.65);
 }
 .site-footer__tags {
@@ -1201,7 +1875,7 @@ select.intro__field {
     }
 }
 
-/* Map entrance: slow, soft fades. The Estación 77 logo appears first. */
+/* Map entrance: quick, soft fades (~2s total). The Estación 77 logo appears first. */
 .ubicacion__map.map-anim .map-logo,
 .ubicacion__map.map-anim .map-pop,
 .ubicacion__map.map-anim .map-fade {
@@ -1213,14 +1887,14 @@ select.intro__field {
     transform-origin: center;
 }
 .ubicacion__map.is-mapped .map-logo {
-    animation: map-logo-in 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: map-logo-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .ubicacion__map.is-mapped .map-fade {
-    animation: map-fade 1.4s ease-out both;
+    animation: map-fade 0.8s ease-out both;
     animation-delay: var(--d, 0s);
 }
 .ubicacion__map.is-mapped .map-pop {
-    animation: map-pop 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: map-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: var(--d, 0s);
 }
 .ubicacion__map .map-route {
@@ -1228,7 +1902,7 @@ select.intro__field {
     stroke-dashoffset: var(--len);
 }
 .ubicacion__map.is-mapped .map-route {
-    animation: map-draw 2.2s cubic-bezier(0.45, 0, 0.2, 1) both;
+    animation: map-draw 1.4s cubic-bezier(0.45, 0, 0.2, 1) both;
     animation-delay: var(--d, 0s);
 }
 @keyframes map-logo-in {
