@@ -2,8 +2,12 @@
   const wrap = document.querySelector("[data-hero-window]");
   if (!wrap) return;
 
+  // The image can be an SVG <image> (home hero) or a regular <img>
+  // (residencial hero); the <img> is scaled up so the pan never shows its edge.
   const image = wrap.querySelector("[data-hero-window-img]");
-  const heroSection = wrap.closest(".hero-banner");
+  const isSvgImage = image instanceof SVGElement;
+  const IMG_OVERSCAN = 1.1;
+  const heroSection = wrap.closest("section");
 
   const MAX_TILT = 7;
   const MAX_PAN_X = 30;
@@ -86,14 +90,14 @@
       (currentX * MAX_TILT).toFixed(2) +
       "deg)";
 
-    image.setAttribute(
-      "transform",
-      "translate(" +
-        (currentX * MAX_PAN_X).toFixed(2) +
-        " " +
-        (currentY * MAX_PAN_Y).toFixed(2) +
-        ")"
-    );
+    const panX = (currentX * MAX_PAN_X).toFixed(2);
+    const panY = (currentY * MAX_PAN_Y).toFixed(2);
+    if (isSvgImage) {
+      image.setAttribute("transform", "translate(" + panX + " " + panY + ")");
+    } else {
+      image.style.transform =
+        "translate(" + panX + "px, " + panY + "px) scale(" + IMG_OVERSCAN + ")";
+    }
 
     const tiltSettled =
       Math.abs(targetX - currentX) < 0.001 && Math.abs(targetY - currentY) < 0.001;

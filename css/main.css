@@ -404,6 +404,223 @@ a.mode-pill:hover .mode-pill__dot,
 a.mode-pill:focus-visible .mode-pill__dot {
     background: #fff;
 }
+/* Current page (e.g. Residencial on residencial.html): filled pill */
+.mode-pill.is-active,
+a.mode-pill.is-active:hover {
+    background: var(--mode-color);
+    color: var(--black-color);
+}
+.mode-pill.is-active .mode-pill__dot,
+a.mode-pill.is-active:hover .mode-pill__dot {
+    background: var(--black-color);
+}
+/* ===== Hero: Residencial (residencial.html) =====
+   Beige top fading into the Residencial light blue at the bottom.
+   Desktop: title + image on the left, claim + figures on the right. */
+.res-hero {
+    --res-blue: var(--metro-blue);
+    position: relative;
+    overflow: hidden;
+    padding: 150px 0 clamp(56px, 6vw, 96px);
+    background: linear-gradient(
+        to bottom,
+        var(--bg-primary) 0%,
+        var(--bg-primary) 50%,
+        #d3dee3 62%,
+        #8fcbe6 100%
+    );
+}
+@media (max-width: 640px) {
+    .res-hero {
+        padding-top: 96px;
+    }
+}
+.res-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "title"
+        "tagline"
+        "media"
+        "stats";
+    row-gap: 28px;
+}
+@media (min-width: 1024px) {
+    .res-hero__inner {
+        grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+        grid-template-areas:
+            "title tagline"
+            "media stats";
+        column-gap: clamp(40px, 5vw, 80px);
+        row-gap: clamp(32px, 4vw, 56px);
+        align-items: center;
+    }
+}
+
+.res-hero__title {
+    grid-area: title;
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 2.5vw, 36px);
+    margin: 0;
+    font-size: clamp(24px, 2.4vw, 38px);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--black-color);
+    animation: res-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+.res-hero__title-dot {
+    flex: none;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 50%;
+    background: var(--res-blue);
+}
+
+.res-hero__tagline {
+    grid-area: tagline;
+    animation: res-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+@media (min-width: 1024px) {
+    .res-hero__tagline {
+        padding-left: clamp(0px, 3vw, 48px);
+    }
+}
+.res-hero__claim {
+    margin: 0;
+    font-size: var(--fs-subtitle);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--black-color);
+}
+.res-hero__sub {
+    margin: 10px 0 0;
+    font-size: var(--fs-small);
+    font-weight: 500;
+    color: var(--black-color);
+}
+
+/* Image split into a thin top strip and the main panel, like a window */
+.res-hero__media {
+    grid-area: media;
+    position: relative;
+    margin: 0;
+    border-radius: clamp(16px, 2vw, 28px);
+    overflow: hidden;
+    aspect-ratio: 16 / 11;
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        #000 0 25%,
+        transparent 25% 28.5%,
+        #000 28.5%
+    );
+    mask-image: linear-gradient(to bottom, #000 0 25%, transparent 25% 28.5%, #000 28.5%);
+    /* Entrance, mouse tilt and scroll parallax come from js/hero-window.js
+       (same effect as the home hero image); it starts hidden to avoid a flash. */
+    opacity: 0;
+    transform: translateY(30px) scale(0.94);
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+.res-hero__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Overscan so the mouse pan never reveals the image edge */
+    transform: scale(1.1);
+    will-change: transform;
+}
+.res-hero__caption {
+    position: absolute;
+    right: 5%;
+    bottom: 4%;
+    color: #fff;
+    font-size: 10px;
+}
+
+/* Figures: "Apartamentos desde 69.5 hasta 105 m2" with light blue dots */
+.res-hero__stats {
+    grid-area: stats;
+    position: relative;
+    justify-self: center;
+    text-align: center;
+    color: var(--black-color);
+    animation: res-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+.res-hero__stats-label {
+    margin: 0;
+    font-size: var(--fs-subtitle);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+.res-hero__stats-range {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.3em;
+    margin: 4px 0 0;
+    font-size: clamp(44px, 5vw, 76px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+.res-hero__stats-range strong {
+    font-weight: 400;
+}
+.res-hero__stats-range span {
+    font-size: 0.4em;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+.res-hero__stats-note {
+    margin: 14px 0 0;
+    font-size: var(--fs-small);
+    letter-spacing: 0.12em;
+}
+.res-hero__dot {
+    position: absolute;
+    z-index: -1;
+    width: clamp(22px, 2.4vw, 34px);
+    height: clamp(22px, 2.4vw, 34px);
+    border-radius: 50%;
+    background: var(--res-blue);
+    opacity: 0.9;
+}
+.res-hero__dot--1 {
+    top: -0.5em;
+    left: 38%;
+}
+.res-hero__dot--2 {
+    top: 0;
+    right: -0.6em;
+}
+.res-hero__dot--3 {
+    top: 48%;
+    left: -0.7em;
+}
+@keyframes res-hero-in {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .res-hero__title,
+    .res-hero__tagline,
+    .res-hero__stats {
+        animation: none;
+    }
+}
+
 .intro {
     background: var(--black-color);
     /* Grows with its content: a fixed max-height cut off the features on
@@ -1642,6 +1859,9 @@ select.intro__field {
     aspect-ratio: 16 / 9;
     background: rgba(35, 33, 32, 0.06);
 }
+.typology-360[hidden] {
+    display: none;
+}
 .typology-360__frame {
     display: block;
     width: 100%;
@@ -1675,6 +1895,264 @@ select.intro__field {
     .typology-tabs__label {
         font-size: 13px;
         bottom: 28px;
+    }
+}
+
+/* ===== Tipos de apartamentos (residencial.html) =====
+   Metro track with one stretch per type: the active stretch turns light
+   blue. The track runs edge to edge; its ends curve off-screen. */
+.tipos {
+    --track: #2f2d2c;
+    --track-w: 10px;
+    --track-y: 43px; /* line center inside the 72px-tall track */
+    position: relative;
+    background: var(--bg-primary);
+    padding: clamp(56px, 6vw, 96px) 0 clamp(56px, 6vw, 96px);
+    overflow-x: clip;
+}
+.tipos__title {
+    display: table;
+    margin: 0 auto;
+    font-size: var(--fs-title);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--black-color);
+}
+.tipos__word {
+    position: relative;
+}
+.tipos__word::before {
+    content: "";
+    position: absolute;
+    width: 0.22em;
+    height: 0.22em;
+    max-width: 11px;
+    max-height: 11px;
+    border-radius: 50%;
+    background: var(--metro-blue);
+}
+.tipos__word--dot-tl::before {
+    top: 0.02em;
+    left: -0.12em;
+}
+.tipos__word--dot-br::before {
+    bottom: 0.08em;
+    right: -0.2em;
+}
+.tipos__word--dot-bl::before {
+    bottom: 0.06em;
+    left: -0.22em;
+}
+
+.tipos__tabs {
+    margin-top: clamp(28px, 3vw, 44px);
+}
+.tipos__track {
+    display: grid;
+    grid-template-columns: minmax(24px, 1fr) minmax(0, 1100px) minmax(24px, 1fr);
+    height: 72px;
+}
+.tipos__end {
+    position: relative;
+}
+.tipos__end svg {
+    position: absolute;
+    top: 0;
+    width: 60px;
+    height: 72px;
+    overflow: visible;
+}
+.tipos__end path {
+    fill: none;
+    stroke: var(--track);
+    stroke-width: var(--track-w);
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+}
+.tipos__end--left svg {
+    left: 0;
+}
+.tipos__end--right svg {
+    right: 0;
+}
+/* Straight part of each end, joining the curve to the stops */
+.tipos__end::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--track-y) - var(--track-w) / 2);
+    height: var(--track-w);
+    background: var(--track);
+}
+.tipos__end--left::after {
+    left: 58px;
+    right: 0;
+}
+.tipos__end--right::after {
+    left: 0;
+    right: 58px;
+}
+@media (max-width: 767px) {
+    .tipos__end svg {
+        width: 24px;
+    }
+    .tipos__end--left::after {
+        left: 22px;
+    }
+    .tipos__end--right::after {
+        right: 22px;
+    }
+}
+
+.tipos__stops {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.tipos__stop {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: var(--font-principal);
+}
+.tipos__label {
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--black-color);
+    white-space: nowrap;
+}
+.tipos__bar {
+    display: block;
+    width: 100%;
+    height: var(--track-w);
+    margin-top: calc(var(--track-y) - 24px - var(--track-w) / 2);
+    background: var(--track);
+    transition: background-color 0.35s ease;
+}
+.tipos__stop:hover .tipos__bar {
+    background: #55524f;
+}
+.tipos__stop.is-active .tipos__bar {
+    background: var(--metro-blue);
+}
+.tipos__stop:focus-visible {
+    outline: 2px solid var(--metro-blue);
+    outline-offset: 4px;
+    border-radius: 6px;
+}
+/* Station dots at each boundary (left of every stop, right of the last) */
+.tipos__stop::before,
+.tipos__stop:last-child::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: var(--track-y);
+    width: 14px;
+    height: 14px;
+    border: 3px solid var(--track);
+    border-radius: 50%;
+    background: #fff;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+}
+.tipos__stop::before {
+    left: 0;
+}
+.tipos__stop:last-child::after {
+    left: 100%;
+}
+
+/* Plans + arrows */
+/* Arrows sit in the side columns; typology-tabs.js sets --arrow-top to the
+   middle of the active plans so they don't align with the specs below. */
+.tipos__stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
+    column-gap: clamp(8px, 2vw, 32px);
+    margin-top: clamp(32px, 4vw, 56px);
+}
+.tipos__arrow {
+    position: absolute;
+    top: var(--arrow-top, 30%);
+    z-index: 2;
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: none;
+    color: var(--black-color);
+    font-size: clamp(28px, 2.6vw, 40px);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.tipos__arrow--prev {
+    left: 0;
+}
+.tipos__arrow--next {
+    right: 0;
+}
+.tipos__arrow:hover {
+    opacity: 0.7;
+}
+.tipos__arrow--prev:hover {
+    transform: translateY(-50%) translateX(-3px);
+}
+.tipos__arrow--next:hover {
+    transform: translateY(-50%) translateX(3px);
+}
+.tipos .typology-tabs__panels {
+    grid-column: 2;
+    margin-top: 0;
+}
+/* Building plan narrower than the apartment plan, as in the design */
+@media (min-width: 1024px) {
+    .tipos .typology-detail > .grid {
+        grid-template-columns: 2fr 3fr;
+        gap: clamp(24px, 3vw, 48px);
+    }
+}
+.tipos .typology-detail__floorplan {
+    border-radius: 0;
+}
+.tipos .typology-specs {
+    max-width: 900px;
+    margin: clamp(40px, 5vw, 72px) auto 0;
+}
+.tipos .typology-specs__label {
+    color: var(--black-color);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0.01em;
+}
+.tipos .typology-specs__item:not(:first-child) {
+    border-left-color: rgba(35, 33, 32, 0.5);
+}
+.tipos .typology-specs__value {
+    color: rgba(35, 33, 32, 0.55);
+}
+@media (max-width: 640px) {
+    .tipos__label {
+        font-size: 10px;
+        letter-spacing: 0.04em;
+    }
+    .tipos__stage {
+        grid-template-columns: 32px minmax(0, 1fr) 32px;
+        column-gap: 4px;
+    }
+    .tipos__arrow {
+        width: 32px;
+        height: 32px;
     }
 }
 
