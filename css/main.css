@@ -115,8 +115,8 @@ body {
     height: 58px;
     width: auto;
 }
-/* Pills menu: only where it fits next to both logos (desktop). On smaller
-   screens the same three pills are shown in the hero. */
+/* Pills menu: only where it fits next to both logos (see the 1200px rule
+   below). On smaller screens the same three pills are shown in the hero. */
 .site-header__nav {
     display: none;
     align-items: center;
@@ -127,7 +127,9 @@ body {
     font-size: clamp(13px, 1.1vw, 16px);
     padding: 0.85em 1.4em;
 }
-@media (min-width: 1024px) {
+/* From 1200px (13" laptops and up): below that the pills plus both logos
+   overflow and cut off the Metro logo; the hero shows the pills instead. */
+@media (min-width: 1200px) {
     .site-header__nav {
         display: flex;
     }
@@ -344,6 +346,18 @@ body {
     transform: translateY(18px);
     will-change: transform, opacity;
 }
+/* Desktop (incl. 13" laptops ~1200–1280px): the three pills stay on one
+   line, sized to the column so they fit. Phones/tablets may still wrap. */
+@media (min-width: 1024px) {
+    .hero-banner__modes {
+        flex-wrap: nowrap;
+        gap: clamp(10px, 1.2vw, 22px);
+    }
+    .hero-banner__modes .mode-pill {
+        flex: none;
+        font-size: clamp(13px, 1.12vw, 20px);
+    }
+}
 /* Shared pill: used in the header menu and the hero */
 .mode-pill {
     --mode-color: #7cc6e2;
@@ -392,12 +406,13 @@ a.mode-pill:focus-visible .mode-pill__dot {
 }
 .intro {
     background: var(--black-color);
+    /* Grows with its content: a fixed max-height cut off the features on
+       short laptop screens (e.g. 13" at 1260×700). */
     min-height: 100dvh;
-    max-height: 100dvh;
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding: 20px 0;
+    padding: clamp(64px, 7vw, 110px) 0;
 }
 @media (max-width: 767px) {
     .intro {
@@ -516,10 +531,18 @@ a.mode-pill:focus-visible .mode-pill__dot {
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    width: 100%;
+    max-width: 420px;
+    margin-inline: auto;
     padding: 5px;
     border-radius: 32px;
     color: var(--black-color);
     text-align: center;
+}
+@media (min-width: 1024px) {
+    .intro__content-form {
+        margin-right: 0;
+    }
 }
 .intro__content-form::before {
     content: "";
@@ -1181,7 +1204,7 @@ select.intro__field {
 .typology-modes {
     position: relative;
     z-index: 1;
-    padding-bottom: clamp(48px, 6vw, 96px);
+    padding-bottom: clamp(8px, 1vw, 16px);
 }
 .typology-modes__content {
     display: flex;
@@ -1875,7 +1898,7 @@ select.intro__field {
     }
 }
 
-/* Map entrance: quick, soft fades (~2s total). The Estación 77 logo appears first. */
+/* Map entrance: quick, soft fades (~1.2s total). The Estación 77 logo appears first. */
 .ubicacion__map.map-anim .map-logo,
 .ubicacion__map.map-anim .map-pop,
 .ubicacion__map.map-anim .map-fade {
@@ -1887,14 +1910,14 @@ select.intro__field {
     transform-origin: center;
 }
 .ubicacion__map.is-mapped .map-logo {
-    animation: map-logo-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: map-logo-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .ubicacion__map.is-mapped .map-fade {
-    animation: map-fade 0.8s ease-out both;
+    animation: map-fade 0.5s ease-out both;
     animation-delay: var(--d, 0s);
 }
 .ubicacion__map.is-mapped .map-pop {
-    animation: map-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: map-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: var(--d, 0s);
 }
 .ubicacion__map .map-route {
@@ -1902,7 +1925,7 @@ select.intro__field {
     stroke-dashoffset: var(--len);
 }
 .ubicacion__map.is-mapped .map-route {
-    animation: map-draw 1.4s cubic-bezier(0.45, 0, 0.2, 1) both;
+    animation: map-draw 0.9s cubic-bezier(0.45, 0, 0.2, 1) both;
     animation-delay: var(--d, 0s);
 }
 @keyframes map-logo-in {

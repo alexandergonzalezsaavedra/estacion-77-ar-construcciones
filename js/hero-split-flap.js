@@ -6,9 +6,12 @@
   if (!lines.length) return;
 
   const FLAP_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const STEP_DELAY = 100;
-  const MIN_STEPS = 5;
-  const MAX_STEPS = 10;
+  const STEP_DELAY = 60;
+  const MIN_STEPS = 3;
+  const MAX_STEPS = 6;
+  const CHAR_STAGGER = 12; // ms between characters
+  const LINE_STAGGER = 60; // extra ms per line
+  const START_AFTER = 450; // ms after load: starts while the logo is still landing
 
   function buildChars(line) {
     const text = line.textContent.replace(/\s+/g, " ").trim();
@@ -82,32 +85,20 @@
 
     function onCharDone() {
       remaining--;
-      if (remaining === 0) setTimeout(revealCta, 200);
+      if (remaining === 0) setTimeout(revealCta, 80);
     }
 
     let index = 0;
     lineChars.forEach((chars, lineIndex) => {
       chars.forEach(({ span, final }) => {
-        const delay = index * 25 + lineIndex * 120;
+        const delay = index * CHAR_STAGGER + lineIndex * LINE_STAGGER;
         runFlap(span, final, delay, onCharDone);
         index++;
       });
     });
   }
 
-  const logo = document.querySelector(".hero-banner__logo-estacion");
-  let started = false;
-  function start() {
-    if (started) return;
-    started = true;
-    play();
-  }
-
-  if (logo) {
-    logo.addEventListener("animationend", start, { once: true });
-    // Safety net in case the animation is skipped (reduced motion, no CSS, etc.)
-    setTimeout(start, 2800);
-  } else {
-    start();
-  }
+  // The logo entrance is JS-driven (hero-parallax.js), so it never fires
+  // `animationend`; start on a short fixed delay instead of waiting for it.
+  setTimeout(play, START_AFTER);
 })();

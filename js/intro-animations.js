@@ -2,8 +2,8 @@
   const section = document.querySelector(".intro");
   if (!section) return;
 
-  const ENTRANCE_DURATION = 700;
-  const STAGGER = 90;
+  const ENTRANCE_DURATION = 500;
+  const STAGGER = 60;
   const SCROLL_EASE = 0.15;
 
   function easeOutCubic(t) {
@@ -102,7 +102,7 @@
           observer.disconnect();
         });
       },
-      { threshold: 0.25 }
+      { threshold: 0.1 }
     );
     observer.observe(section);
   }

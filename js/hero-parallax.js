@@ -6,10 +6,10 @@
   const heading = heroSection.querySelector("[data-split-flap]");
   const cta = heroSection.querySelector("[data-hero-cta]");
 
-  const LOGO_DURATION = 2400;
+  const LOGO_DURATION = 900;
   const LOGO_SCROLL_FACTOR = 0.12;
   const HEADING_SCROLL_FACTOR = 0.08;
-  const CTA_DURATION = 500;
+  const CTA_DURATION = 400;
   const CTA_SCROLL_FACTOR = 0.05;
   const SCROLL_EASE = 0.15;
 
@@ -57,7 +57,7 @@
         if (progress < 1) stillAnimating = true;
         else logoState.done = true;
       }
-      const entranceTY = (1 - ease) * -110;
+      const entranceTY = (1 - ease) * -60;
       const scale = 0.96 + ease * 0.04;
       const blur = (1 - ease) * 6;
       logo.style.opacity = ease.toFixed(3);
