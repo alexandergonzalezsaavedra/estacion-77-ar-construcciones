@@ -131,11 +131,17 @@
       <div
         class="container site-header__inner mx-auto flex items-center justify-between"
       >
-        <img
-          class="site-header__logo site-header__logo--ar"
-          src="./img/logo-ar-construcciones-50.png"
-          alt="AR Construcciones - 50 años"
-        />
+        <a
+          class="site-header__home"
+          href="index.html"
+          aria-label="Ir al inicio - AR Construcciones 50 años"
+        >
+          <img
+            class="site-header__logo site-header__logo--ar"
+            src="./img/logo-ar-construcciones-50.png"
+            alt="AR Construcciones - 50 años"
+          />
+        </a>
         <nav
           class="site-header__nav"
           aria-label="Menú principal"
@@ -149,14 +155,14 @@
           </a>
           <a
             class="mode-pill mode-pill--hotelero"
-            href="#hotelero"
+            href="hotelero.html"
           >
             <span class="mode-pill__dot"></span>
             Hotelero
           </a>
           <a
             class="mode-pill mode-pill--senior"
-            href="#senior"
+            href="senior.html"
           >
             <span class="mode-pill__dot"></span>
             Senior
@@ -246,23 +252,34 @@
                 diferentes de vivirla
               </span>
             </h2>
-            <ul
+            <!-- Links to each living-mode landing (entrance animated by hero-parallax.js via data-hero-cta) -->
+            <nav
               class="hero-banner__modes"
               data-hero-cta
+              aria-label="Formas de vivir"
             >
-              <li class="mode-pill mode-pill--residencial">
+              <a
+                class="mode-pill mode-pill--residencial"
+                href="residencial.html"
+              >
                 <span class="mode-pill__dot"></span>
                 Residencial
-              </li>
-              <li class="mode-pill mode-pill--hotelero">
+              </a>
+              <a
+                class="mode-pill mode-pill--hotelero"
+                href="hotelero.html"
+              >
                 <span class="mode-pill__dot"></span>
                 Hotelero
-              </li>
-              <li class="mode-pill mode-pill--senior">
+              </a>
+              <a
+                class="mode-pill mode-pill--senior"
+                href="senior.html"
+              >
                 <span class="mode-pill__dot"></span>
                 Senior
-              </li>
-            </ul>
+              </a>
+            </nav>
           </div>
         </div>
       </section>
@@ -332,6 +349,8 @@
                       type="text"
                       id="nombre"
                       name="nombre"
+                      required
+                      autocomplete="name"
                       placeholder="Nombre completo*"
                       aria-label="Nombre completo"
                     />
@@ -341,6 +360,8 @@
                       type="email"
                       id="email"
                       name="email"
+                      required
+                      autocomplete="email"
                       placeholder="Correo electrónico*"
                       aria-label="Correo electrónico"
                     />
@@ -350,27 +371,82 @@
                       type="tel"
                       id="telefono"
                       name="telefono"
+                      required
+                      autocomplete="tel"
+                      inputmode="tel"
+                      pattern="[0-9 +()-]{7,}"
+                      title="Escribe un número de teléfono válido"
                       placeholder="Teléfono / Celular*"
                       aria-label="Teléfono o celular"
                     />
 
                     <select
                       class="intro__field"
+                      id="apartamento"
+                      name="apartamento"
                       aria-label="Me interesa un apartamento"
+                      required
                     >
-                      <option value="">Me interesa un Apartamento:</option>
+                      <option
+                        value=""
+                        disabled
+                        selected
+                      >
+                        Me interesa un Apartamento:*
+                      </option>
+                      <optgroup label="RESIDENCIAL DE 69.5 m² A 105 m²">
+                        <option value="Residencial de 69.5 m2">Residencial de 69.5 m²</option>
+                        <option value="Residencial de 72.5 m2">Residencial de 72.5 m²</option>
+                        <option value="Residencial de 91 m2">Residencial de 91 m²</option>
+                        <option value="Residencial de 105 m2">Residencial de 105 m²</option>
+                      </optgroup>
+                      <optgroup label="HOTELERO DE 29.5 m² A 60.5 m²">
+                        <option value="Hotelero de 29.5 m2 + Balcon">Hotelero de 29.5 m² + Balcón</option>
+                        <option value="Hotelero de 42.5 m2 + Balcon">Hotelero de 42.5 m² + Balcón</option>
+                        <option value="Hotelero de 60.5 m2 + Balcon">Hotelero de 60.5 m² + Balcón</option>
+                      </optgroup>
+                      <optgroup label="SENIOR DE 43 m² A 98 m²">
+                        <option value="Senior de 43 m2">Senior de 43 m²</option>
+                        <option value="Senior de 68 m2">Senior de 68 m²</option>
+                        <option value="Senior de 96 m2">Senior de 96 m²</option>
+                        <option value="Senior de 98 m2">Senior de 98 m²</option>
+                      </optgroup>
                     </select>
                     <select
                       class="intro__field"
+                      id="proposito"
+                      name="proposito"
                       aria-label="Me interesa comprar para"
+                      required
                     >
-                      <option value="">Me interesa comprar para:</option>
+                      <option
+                        value=""
+                        disabled
+                        selected
+                      >
+                        Me interesa comprar para:*
+                      </option>
+                      <option value="Vivienda">Vivienda</option>
+                      <option value="Inversion">Inversión</option>
                     </select>
                     <select
                       class="intro__field"
+                      id="plazo"
+                      name="plazo"
                       aria-label="Estoy pensando en comprar"
+                      required
                     >
-                      <option value="">Estoy pensando en comprar:</option>
+                      <option
+                        value=""
+                        disabled
+                        selected
+                      >
+                        Estoy pensando en comprar:*
+                      </option>
+                      <option value="Dentro de 30 dias">Dentro de 30 días</option>
+                      <option value="En 2 a 3 meses">En 2 a 3 meses</option>
+                      <option value="En 3 a 6 meses">En 3 a 6 meses</option>
+                      <option value="En mas de 6 meses">En más de 6 meses</option>
                     </select>
 
                     <label class="intro__checkbox">
@@ -378,6 +454,7 @@
                         type="checkbox"
                         id="subscribe"
                         name="tyc"
+                        required
                       />
                       <span>
                         Acepto los
@@ -386,7 +463,7 @@
                           href="#"
                         >
                           términos y condiciones
-                        </a>
+                        </a>*
                       </span>
                     </label>
 
@@ -530,69 +607,102 @@
             >
               <div class="typology__slide is-active">
                 <img
-                  src="./img/slide-amenidades/slide-estacion-77.jpg"
-                  alt="Salón social Estación 77"
+                  src="./img/gallery/home/estacion-77-comercio.webp"
+                  alt="Comercio Estación 77"
+                  decoding="async"
                 />
                 <div class="typology__caption">
-                  <h4 class="typology__caption-title">Salón social</h4>
+                  <h4 class="typology__caption-title">Comercio</h4>
                   <ul
                     class="typology__caption-modes"
                     aria-label="Disponible para"
                   >
-                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--hotelero"
+                      ></span>
+                      Hotelero
+                    </li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--senior"
+                      ></span>
+                      Senior
+                    </li>
                   </ul>
                 </div>
               </div>
               <div class="typology__slide">
                 <img
-                  src="./img/slide-amenidades/gym.jpg"
-                  alt="Gimnasio Estación 77"
+                  src="./img/gallery/home/estacion-77-comercio-vista-2.webp"
+                  alt="Comercio Estación 77"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div class="typology__caption">
-                  <h4 class="typology__caption-title">Gym</h4>
+                  <h4 class="typology__caption-title">Comercio</h4>
                   <ul
                     class="typology__caption-modes"
                     aria-label="Disponible para"
                   >
-                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--hotelero"
+                      ></span>
+                      Hotelero
+                    </li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--senior"
+                      ></span>
+                      Senior
+                    </li>
                   </ul>
                 </div>
               </div>
               <div class="typology__slide">
                 <img
-                  src="./img/slide-amenidades/gym.jpg"
-                  alt="Parqueadero Estación 77"
+                  src="./img/gallery/home/estacion-77-terraza.webp"
+                  alt="Terraza Estación 77"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div class="typology__caption">
-                  <h4 class="typology__caption-title">Parqueadero</h4>
+                  <h4 class="typology__caption-title">Terraza</h4>
                   <ul
                     class="typology__caption-modes"
                     aria-label="Disponible para"
                   >
-                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="typology__slide">
-                <img
-                  src="./img/slide-amenidades/gym.jpg"
-                  alt="Zona BBQ Estación 77"
-                />
-                <div class="typology__caption">
-                  <h4 class="typology__caption-title">Zona BBQ</h4>
-                  <ul
-                    class="typology__caption-modes"
-                    aria-label="Disponible para"
-                  >
-                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--hotelero"
+                      ></span>
+                      Hotelero
+                    </li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--senior"
+                      ></span>
+                      Senior
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -639,12 +749,6 @@
                 type="button"
                 aria-label="Ir a la diapositiva 3"
               ></button>
-              <button
-                class="typology__dot"
-                data-dot="3"
-                type="button"
-                aria-label="Ir a la diapositiva 4"
-              ></button>
             </div>
           </div>
         </div>
@@ -671,14 +775,14 @@
               </a>
               <a
                 class="mode-pill mode-pill--hotelero"
-                href="#hotelero"
+                href="hotelero.html"
               >
                 <span class="mode-pill__dot"></span>
                 Hotelero
               </a>
               <a
                 class="mode-pill mode-pill--senior"
-                href="#senior"
+                href="senior.html"
               >
                 <span class="mode-pill__dot"></span>
                 Senior

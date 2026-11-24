@@ -126,16 +126,22 @@
       content="Fachada del proyecto Estación 77 de AR Construcciones en Ciudad Peldar, Envigado"
     />
   </head>
-  <body>
+  <body class="theme-residencial">
     <header class="site-header">
       <div
         class="container site-header__inner mx-auto flex items-center justify-between"
       >
-        <img
-          class="site-header__logo site-header__logo--ar"
-          src="./img/logo-ar-construcciones-50.png"
-          alt="AR Construcciones - 50 años"
-        />
+        <a
+          class="site-header__home"
+          href="index.html"
+          aria-label="Ir al inicio - AR Construcciones 50 años"
+        >
+          <img
+            class="site-header__logo site-header__logo--ar"
+            src="./img/logo-ar-construcciones-50.png"
+            alt="AR Construcciones - 50 años"
+          />
+        </a>
         <nav
           class="site-header__nav"
           aria-label="Menú principal"
@@ -150,14 +156,14 @@
           </a>
           <a
             class="mode-pill mode-pill--hotelero"
-            href="#hotelero"
+            href="hotelero.html"
           >
             <span class="mode-pill__dot"></span>
             Hotelero
           </a>
           <a
             class="mode-pill mode-pill--senior"
-            href="#senior"
+            href="senior.html"
           >
             <span class="mode-pill__dot"></span>
             Senior
@@ -196,11 +202,10 @@
             class="res-hero__media"
             data-hero-window
           >
-            <!-- TODO: replace with the Residencial hero photo (coworking). -->
             <img
               data-hero-window-img
-              src="./img/slide-amenidades/slide-estacion-77.jpg"
-              alt="Zonas comunes residenciales de Estación 77"
+              src="./img/gallery/residencial/estacion-77-residencial-hero.webp"
+              alt="Residencial – Estación 77"
             />
             <figcaption class="res-hero__caption">Imagen ilustrativa</figcaption>
           </figure>
@@ -222,7 +227,7 @@
             <p class="res-hero__stats-range">
               <strong>69.5</strong>
               <span>hasta</span>
-              <strong>105 m2</strong>
+              <strong>105 m²</strong>
             </p>
             <p class="res-hero__stats-note">Áreas construidas</p>
           </div>
@@ -253,7 +258,7 @@
                   áreas desde
                 </span>
                 <span class="intro__title-highlight">
-                  <strong>29</strong> hasta <strong>105 m2</strong>
+                  <strong>69.5</strong> hasta <strong>105 m2</strong>
                 </span>
               </h3>
               <p
@@ -266,11 +271,11 @@
                 class="intro__description"
                 data-reveal
               >
-                Este macroproyecto de 30 pisos combina de manera inteligente
-                vivienda, inversión, comercio y oficinas, creando un entorno
-                dinámico y moderno. Suites y amplios apartamentos de 2 o 3
-                habitaciones, todos con balcones y algunos con opción de
-                parqueadero privado, pensados para adaptarse a tu estilo de vida.
+                En este macroproyecto de 30 pisos, la vivienda residencial
+                ofrece apartamentos de 69.5 a 105 m² construidos, de 2 o 3
+                habitaciones y de 2 a 4 baños. Todos tienen balcón y algunos
+                incluyen opción de parqueadero privado, pensados para adaptarse
+                a tu estilo de vida.
               </p>
             </div>
             <div class="col-span-1 lg:col-span-5">
@@ -294,6 +299,8 @@
                       type="text"
                       id="nombre"
                       name="nombre"
+                      required
+                      autocomplete="name"
                       placeholder="Nombre completo*"
                       aria-label="Nombre completo"
                     />
@@ -303,6 +310,8 @@
                       type="email"
                       id="email"
                       name="email"
+                      required
+                      autocomplete="email"
                       placeholder="Correo electrónico*"
                       aria-label="Correo electrónico"
                     />
@@ -312,27 +321,69 @@
                       type="tel"
                       id="telefono"
                       name="telefono"
+                      required
+                      autocomplete="tel"
+                      inputmode="tel"
+                      pattern="[0-9 +()-]{7,}"
+                      title="Escribe un número de teléfono válido"
                       placeholder="Teléfono / Celular*"
                       aria-label="Teléfono o celular"
                     />
 
                     <select
                       class="intro__field"
+                      id="apartamento"
+                      name="apartamento"
                       aria-label="Me interesa un apartamento"
+                      required
                     >
-                      <option value="">Me interesa un Apartamento:</option>
+                      <option
+                        value=""
+                        disabled
+                        selected
+                      >
+                        Me interesa un Apartamento:*
+                      </option>
+                      <option value="Residencial de 69.5 m2">Residencial de 69.5 m²</option>
+                      <option value="Residencial de 72.5 m2">Residencial de 72.5 m²</option>
+                      <option value="Residencial de 91 m2">Residencial de 91 m²</option>
+                      <option value="Residencial de 105 m2">Residencial de 105 m²</option>
                     </select>
                     <select
                       class="intro__field"
+                      id="proposito"
+                      name="proposito"
                       aria-label="Me interesa comprar para"
+                      required
                     >
-                      <option value="">Me interesa comprar para:</option>
+                      <option
+                        value=""
+                        disabled
+                        selected
+                      >
+                        Me interesa comprar para:*
+                      </option>
+                      <option value="Vivienda">Vivienda</option>
+                      <option value="Inversion">Inversión</option>
                     </select>
                     <select
                       class="intro__field"
+                      id="plazo"
+                      name="plazo"
                       aria-label="Estoy pensando en comprar"
+                      required
                     >
-                      <option value="">Estoy pensando en comprar:</option>
+                      <option
+                        value=""
+                        disabled
+                        selected
+                      >
+                        Estoy pensando en comprar:*
+                      </option>
+                      <option value="Dentro de 30 dias">Dentro de 30 días</option>
+                      <option value="En 2 a 3 meses">En 2 a 3 meses</option>
+                      <option value="En 3 a 6 meses">En 3 a 6 meses</option>
+                      <option value="En mas de 6 meses">En más de 6 meses</option>
                     </select>
 
                     <label class="intro__checkbox">
@@ -340,6 +391,7 @@
                         type="checkbox"
                         id="subscribe"
                         name="tyc"
+                        required
                       />
                       <span>
                         Acepto los
@@ -348,7 +400,7 @@
                           href="#"
                         >
                           términos y condiciones
-                        </a>
+                        </a>*
                       </span>
                     </label>
 
@@ -516,14 +568,20 @@
                   <div class="typology-detail">
                     <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-6 lg:gap-4">
                       <img
-                        src="/img/tipologias/uno/tipologia-1.1.png"
-                        alt="Tipologia uno"
+                        src="./img/tipologias/residencial/estacion-77-tipologia-apartamento-de-69-y-72-5-metros-cuadrados.webp"
+                        alt="Planta piso tipo, pisos 7 al 30: ubicación del Tipo 1 y 1A"
+                        width="850"
+                        height="420"
+                        loading="lazy"
                         class="typology-detail__floorplan"
                       />
   
                       <img
-                        src="/img/tipologias/uno/tipologia-1.2.png"
-                        alt="Tipologia uno"
+                        src="./img/tipologias/residencial/estacion-77-tipologia-apartamento-de-69-metros-cuadrados.webp"
+                        alt="Plano apartamento Tipo 1 de 69.5 m²"
+                        width="1150"
+                        height="700"
+                        loading="lazy"
                         class="typology-detail__floorplan"
                       />
                     </div>
@@ -531,11 +589,11 @@
                     <div class="typology-specs">
                       <div class="typology-specs__item">
                         <p class="typology-specs__label">Área construida</p>
-                        <p class="typology-specs__value">66.5 hasta 69 m²</p>
+                        <p class="typology-specs__value">69.5 y 72.5 m²</p>
                       </div>
                       <div class="typology-specs__item">
                         <p class="typology-specs__label">Área privada</p>
-                        <p class="typology-specs__value">59.5 hasta 61 m²</p>
+                        <p class="typology-specs__value">62.5 y 63.5 m²</p>
                       </div>
                       <div class="typology-specs__item">
                         <p class="typology-specs__label">Habitaciones</p>
@@ -569,14 +627,20 @@
                     <div class="typology-detail">
                       <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-6 lg:gap-4">
                         <img
-                          src="/img/tipologias/dos/tipologia-2.png"
-                          alt="Tipologia uno"
+                          src="./img/tipologias/residencial/estacion-77-tipologia-piso-7-al-30-de-91-metros-cuadrados.webp"
+                          alt="Planta piso tipo, pisos 7 al 30: ubicación del Tipo 2"
+                          width="850"
+                          height="420"
+                          loading="lazy"
                           class="typology-detail__floorplan"
                         />
   
                         <img
-                          src="/img/tipologias/dos/tipologia-2.1.png"
-                          alt="Tipologia dos"
+                          src="./img/tipologias/residencial/estacion-77-tipologia-apartamento-de-91-metros-cuadrados.webp"
+                          alt="Plano apartamento Tipo 2 de 91 m²"
+                          width="1150"
+                          height="700"
+                          loading="lazy"
                           class="typology-detail__floorplan"
                         />
                       </div>
@@ -584,11 +648,11 @@
                       <div class="typology-specs">
                         <div class="typology-specs__item">
                           <p class="typology-specs__label">Área construida</p>
-                          <p class="typology-specs__value">88.5 m²</p>
+                          <p class="typology-specs__value">91 m²</p>
                         </div>
                         <div class="typology-specs__item">
                           <p class="typology-specs__label">Área privada</p>
-                          <p class="typology-specs__value">78.5 m²</p>
+                          <p class="typology-specs__value">81.5 m²</p>
                         </div>
                         <div class="typology-specs__item">
                           <p class="typology-specs__label">Habitaciones</p>
@@ -623,14 +687,20 @@
                     <div class="typology-detail">
                       <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-6 lg:gap-4">
                         <img
-                          src="/img/tipologias/tres/tipologia-3.png"
-                          alt="Tipologia uno"
+                          src="./img/tipologias/residencial/estacion-77-tipologia-piso-7-al-30-de-105-metros-cuadrados.webp"
+                          alt="Planta piso tipo, pisos 7 al 30: ubicación del Tipo 3"
+                          width="850"
+                          height="420"
+                          loading="lazy"
                           class="typology-detail__floorplan"
                         />
   
                         <img
-                          src="/img/tipologias/tres/tipologia-3.1.png"
-                          alt="Tipologia uno"
+                          src="./img/tipologias/residencial/estacion-77-tipologia-apartamento-de-105-metros-cuadrados.webp"
+                          alt="Plano apartamento Tipo 3 de 105 m²"
+                          width="1150"
+                          height="700"
+                          loading="lazy"
                           class="typology-detail__floorplan"
                         />
                       </div>
@@ -638,11 +708,11 @@
                       <div class="typology-specs">
                         <div class="typology-specs__item">
                           <p class="typology-specs__label">Área construida</p>
-                          <p class="typology-specs__value">102 m²</p>
+                          <p class="typology-specs__value">105 m²</p>
                         </div>
                         <div class="typology-specs__item">
                           <p class="typology-specs__label">Área privada</p>
-                          <p class="typology-specs__value">92 m²</p>
+                          <p class="typology-specs__value">95.5 m²</p>
                         </div>
                         <div class="typology-specs__item">
                           <p class="typology-specs__label">Habitaciones</p>
@@ -754,69 +824,176 @@
             >
               <div class="typology__slide is-active">
                 <img
-                  src="./img/slide-amenidades/slide-estacion-77.jpg"
-                  alt="Salón social Estación 77"
+                  src="./img/gallery/residencial/estacion-77-residencial-lobby.webp"
+                  alt="Lobby – Residencial Estación 77"
+                  decoding="async"
                 />
                 <div class="typology__caption">
-                  <h4 class="typology__caption-title">Salón social</h4>
+                  <h4 class="typology__caption-title">Lobby</h4>
                   <ul
                     class="typology__caption-modes"
                     aria-label="Disponible para"
                   >
-                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
                   </ul>
                 </div>
               </div>
               <div class="typology__slide">
                 <img
-                  src="./img/slide-amenidades/gym.jpg"
-                  alt="Gimnasio Estación 77"
+                  src="./img/gallery/residencial/estacion-77-residencial-coworking.webp"
+                  alt="Coworking – Residencial Estación 77"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div class="typology__caption">
-                  <h4 class="typology__caption-title">Gym</h4>
+                  <h4 class="typology__caption-title">Coworking</h4>
                   <ul
                     class="typology__caption-modes"
                     aria-label="Disponible para"
                   >
-                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
                   </ul>
                 </div>
               </div>
               <div class="typology__slide">
                 <img
-                  src="./img/slide-amenidades/gym.jpg"
-                  alt="Parqueadero Estación 77"
+                  src="./img/gallery/residencial/estacion-77-residencial-gimnasio.webp"
+                  alt="Gimnasio – Residencial Estación 77"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div class="typology__caption">
-                  <h4 class="typology__caption-title">Parqueadero</h4>
+                  <h4 class="typology__caption-title">Gimnasio</h4>
                   <ul
                     class="typology__caption-modes"
                     aria-label="Disponible para"
                   >
-                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
                   </ul>
                 </div>
               </div>
               <div class="typology__slide">
                 <img
-                  src="./img/slide-amenidades/gym.jpg"
-                  alt="Zona BBQ Estación 77"
+                  src="./img/gallery/residencial/estacion-77-residencial-piscina.webp"
+                  alt="Piscina – Residencial Estación 77"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div class="typology__caption">
-                  <h4 class="typology__caption-title">Zona BBQ</h4>
+                  <h4 class="typology__caption-title">Piscina</h4>
                   <ul
                     class="typology__caption-modes"
                     aria-label="Disponible para"
                   >
-                    <li><span class="typology__caption-dot typology__caption-dot--residencial"></span>Residencial</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--hotelero"></span>Hotelero</li>
-                    <li><span class="typology__caption-dot typology__caption-dot--senior"></span>Senior</li>
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="typology__slide">
+                <img
+                  src="./img/gallery/residencial/estacion-77-residencial-rooftop.webp"
+                  alt="Rooftop – Residencial Estación 77"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="typology__caption">
+                  <h4 class="typology__caption-title">Rooftop</h4>
+                  <ul
+                    class="typology__caption-modes"
+                    aria-label="Disponible para"
+                  >
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="typology__slide">
+                <img
+                  src="./img/gallery/residencial/estacion-77-residencial-sportbar.webp"
+                  alt="Sport bar – Residencial Estación 77"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="typology__caption">
+                  <h4 class="typology__caption-title">Sport bar</h4>
+                  <ul
+                    class="typology__caption-modes"
+                    aria-label="Disponible para"
+                  >
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="typology__slide">
+                <img
+                  src="./img/gallery/residencial/estacion-77-residencial-ciclo-taller.webp"
+                  alt="Ciclo taller – Residencial Estación 77"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="typology__caption">
+                  <h4 class="typology__caption-title">Ciclo taller</h4>
+                  <ul
+                    class="typology__caption-modes"
+                    aria-label="Disponible para"
+                  >
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="typology__slide">
+                <img
+                  src="./img/gallery/residencial/estacion-77-residencial-zona-de-mascotas.webp"
+                  alt="Zona de mascotas – Residencial Estación 77"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="typology__caption">
+                  <h4 class="typology__caption-title">Zona de mascotas</h4>
+                  <ul
+                    class="typology__caption-modes"
+                    aria-label="Disponible para"
+                  >
+                    <li>
+                      <span
+                        class="typology__caption-dot typology__caption-dot--residencial"
+                      ></span>
+                      Residencial
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -869,6 +1046,30 @@
                 type="button"
                 aria-label="Ir a la diapositiva 4"
               ></button>
+              <button
+                class="typology__dot"
+                data-dot="4"
+                type="button"
+                aria-label="Ir a la diapositiva 5"
+              ></button>
+              <button
+                class="typology__dot"
+                data-dot="5"
+                type="button"
+                aria-label="Ir a la diapositiva 6"
+              ></button>
+              <button
+                class="typology__dot"
+                data-dot="6"
+                type="button"
+                aria-label="Ir a la diapositiva 7"
+              ></button>
+              <button
+                class="typology__dot"
+                data-dot="7"
+                type="button"
+                aria-label="Ir a la diapositiva 8"
+              ></button>
             </div>
           </div>
         </div>
@@ -899,14 +1100,14 @@
               </a>
               <a
                 class="mode-pill mode-pill--hotelero"
-                href="#hotelero"
+                href="hotelero.html"
               >
                 <span class="mode-pill__dot"></span>
                 Hotelero
               </a>
               <a
                 class="mode-pill mode-pill--senior"
-                href="#senior"
+                href="senior.html"
               >
                 <span class="mode-pill__dot"></span>
                 Senior

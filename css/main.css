@@ -76,6 +76,16 @@
     );
     --text-light: #e8e4df;
 
+    /* Living-mode page theme (residencial.html / hotelero.html).
+       Defaults = Residencial; body.theme-hotelero overrides them below. */
+    --accent: var(--metro-blue); /* dots, active track stretch */
+    --accent-soft: var(--metro-blue); /* decorative dots around figures */
+    --accent-ink: var(--black-color); /* hero claim and figures */
+    --hero-fade-mid: #d3dee3; /* hero background: beige -> this -> fade */
+    --hero-fade: #8fcbe6;
+    --track: #2f2d2c; /* metro track in "Tipos de apartamentos" */
+    --spec-value: rgba(35, 33, 32, 0.55);
+
     /* Type scale for all content sections (the hero/banners have their own).
        Use these instead of fixed sizes so every section matches. */
     --fs-title: clamp(28px, 3.5vw, 50px); /* section titles, big figures */
@@ -83,6 +93,32 @@
     --fs-body: clamp(17px, 1.35vw, 20px); /* paragraphs: 17px on phones/tablets, up to 20px on desktop */
     --fs-small: 14px; /* notes, labels, legal */
     --lh-body: 1.5;
+}
+/* Hotelero page: everything in the Hotelero purple */
+.theme-hotelero {
+    --accent: var(--metro-purple);
+    --accent-soft: #a594d0;
+    --accent-ink: var(--metro-purple);
+    --hero-fade-mid: #d8d3dd;
+    --hero-fade: #a99bd2;
+    --track: #2d2a50;
+    --spec-value: #8a76c0;
+}
+/* Senior page: everything in the Senior green */
+.theme-senior {
+    --accent: var(--metro-green);
+    --accent-soft: var(--metro-green);
+    --accent-ink: #00855a; /* slightly deeper green so text stays readable */
+    --hero-fade-mid: #d3e1da;
+    --hero-fade: #3fb487;
+    --track: #0f3a32;
+    --spec-value: #4f9c80;
+}
+/* Living-mode pages: the gallery title dots take the page color */
+.theme-residencial .typology__title-dot,
+.theme-hotelero .typology__title-dot,
+.theme-senior .typology__title-dot {
+    background: var(--accent);
 }
 html {
     overflow-x: hidden;
@@ -143,6 +179,16 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+/* AR logo links to the home page */
+.site-header__home {
+    display: block;
+    flex: none;
+    border-radius: 4px;
+}
+.site-header__home:focus-visible {
+    outline: 2px solid var(--red-color);
+    outline-offset: 4px;
 }
 .site-header__logo--ar {
     animation: header-logo-left 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -414,20 +460,33 @@ a.mode-pill.is-active:hover {
 a.mode-pill.is-active:hover .mode-pill__dot {
     background: var(--black-color);
 }
-/* ===== Hero: Residencial (residencial.html) =====
-   Beige top fading into the Residencial light blue at the bottom.
-   Desktop: title + image on the left, claim + figures on the right. */
+/* Dark fills (Hotelero purple, Senior green) need white text for contrast */
+.mode-pill--hotelero.is-active,
+a.mode-pill--hotelero.is-active:hover,
+.mode-pill--senior.is-active,
+a.mode-pill--senior.is-active:hover {
+    color: #fff;
+}
+.mode-pill--hotelero.is-active .mode-pill__dot,
+a.mode-pill--hotelero.is-active:hover .mode-pill__dot,
+.mode-pill--senior.is-active .mode-pill__dot,
+a.mode-pill--senior.is-active:hover .mode-pill__dot {
+    background: #fff;
+}
+/* ===== Hero: living-mode landings (residencial / hotelero / senior) =====
+   Beige top fading into the page color at the bottom (theme tokens).
+   Desktop: title + large image on the left; claim + figures on the right,
+   both left-aligned on the same edge. */
 .res-hero {
-    --res-blue: var(--metro-blue);
     position: relative;
     overflow: hidden;
-    padding: 150px 0 clamp(56px, 6vw, 96px);
+    padding: 160px 0 clamp(56px, 6vw, 110px);
     background: linear-gradient(
         to bottom,
         var(--bg-primary) 0%,
         var(--bg-primary) 50%,
-        #d3dee3 62%,
-        #8fcbe6 100%
+        var(--hero-fade-mid) 66%,
+        var(--hero-fade) 100%
     );
 }
 @media (max-width: 640px) {
@@ -447,13 +506,13 @@ a.mode-pill.is-active:hover .mode-pill__dot {
 }
 @media (min-width: 1024px) {
     .res-hero__inner {
-        grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+        grid-template-columns: minmax(0, 52fr) minmax(0, 48fr);
         grid-template-areas:
             "title tagline"
             "media stats";
-        column-gap: clamp(40px, 5vw, 80px);
-        row-gap: clamp(32px, 4vw, 56px);
-        align-items: center;
+        column-gap: clamp(40px, 7vw, 120px);
+        row-gap: clamp(24px, 3vw, 40px);
+        align-items: start;
     }
 }
 
@@ -461,11 +520,12 @@ a.mode-pill.is-active:hover .mode-pill__dot {
     grid-area: title;
     display: flex;
     align-items: center;
-    gap: clamp(20px, 2.5vw, 36px);
+    gap: clamp(24px, 3.5vw, 72px);
     margin: 0;
-    font-size: clamp(24px, 2.4vw, 38px);
+    padding-top: 0.15em; /* lines up with the first line of the claim */
+    font-size: clamp(26px, 2.9vw, 50px);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     line-height: 1;
     text-transform: uppercase;
     color: var(--black-color);
@@ -476,30 +536,32 @@ a.mode-pill.is-active:hover .mode-pill__dot {
     width: 1.1em;
     height: 1.1em;
     border-radius: 50%;
-    background: var(--res-blue);
+    background: var(--accent);
 }
 
 .res-hero__tagline {
     grid-area: tagline;
     animation: res-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
-@media (min-width: 1024px) {
-    .res-hero__tagline {
-        padding-left: clamp(0px, 3vw, 48px);
-    }
-}
 .res-hero__claim {
     margin: 0;
-    font-size: var(--fs-subtitle);
+    font-size: clamp(26px, 2.9vw, 50px);
     font-weight: 300;
-    line-height: 1.1;
-    color: var(--black-color);
+    line-height: 1.25;
+    color: var(--accent-ink);
 }
 .res-hero__sub {
-    margin: 10px 0 0;
-    font-size: var(--fs-small);
-    font-weight: 500;
+    margin: 14px 0 0;
+    font-size: clamp(16px, 1.45vw, 26px);
+    font-weight: 400;
     color: var(--black-color);
+}
+/* Longer intro paragraph (Hotelero / Senior) */
+.res-hero__sub--text {
+    max-width: 30em;
+    margin-top: 20px;
+    font-size: clamp(15px, 1.1vw, 18px);
+    line-height: 1.4;
 }
 
 /* Image split into a thin top strip and the main panel, like a window */
@@ -507,16 +569,16 @@ a.mode-pill.is-active:hover .mode-pill__dot {
     grid-area: media;
     position: relative;
     margin: 0;
-    border-radius: clamp(16px, 2vw, 28px);
+    border-radius: clamp(18px, 2.4vw, 40px);
     overflow: hidden;
-    aspect-ratio: 16 / 11;
+    aspect-ratio: 10 / 7;
     -webkit-mask-image: linear-gradient(
         to bottom,
-        #000 0 25%,
-        transparent 25% 28.5%,
-        #000 28.5%
+        #000 0 26%,
+        transparent 26% 30%,
+        #000 30%
     );
-    mask-image: linear-gradient(to bottom, #000 0 25%, transparent 25% 28.5%, #000 28.5%);
+    mask-image: linear-gradient(to bottom, #000 0 26%, transparent 26% 30%, #000 30%);
     /* Entrance, mouse tilt and scroll parallax come from js/hero-window.js
        (same effect as the home hero image); it starts hidden to avoid a flash. */
     opacity: 0;
@@ -535,24 +597,36 @@ a.mode-pill.is-active:hover .mode-pill__dot {
 }
 .res-hero__caption {
     position: absolute;
-    right: 5%;
+    right: 9%;
     bottom: 4%;
     color: #fff;
-    font-size: 10px;
+    font-size: 11px;
 }
 
-/* Figures: "Apartamentos desde 69.5 hasta 105 m2" with light blue dots */
+/* Figures: "Apartamentos desde 69.5 hasta 105 m²". The block sits on the
+   same left edge as the claim; its lines are centered within it. */
 .res-hero__stats {
     grid-area: stats;
     position: relative;
-    justify-self: center;
+    justify-self: start;
     text-align: center;
-    color: var(--black-color);
+    color: var(--accent-ink);
     animation: res-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+@media (min-width: 1024px) {
+    .res-hero__stats {
+        align-self: end;
+        margin-bottom: clamp(48px, 6vw, 100px);
+    }
+}
+@media (max-width: 1023px) {
+    .res-hero__stats {
+        justify-self: center;
+    }
 }
 .res-hero__stats-label {
     margin: 0;
-    font-size: var(--fs-subtitle);
+    font-size: clamp(26px, 2.8vw, 50px);
     font-weight: 300;
     letter-spacing: 0.02em;
     line-height: 1.1;
@@ -562,46 +636,50 @@ a.mode-pill.is-active:hover .mode-pill__dot {
     display: flex;
     align-items: baseline;
     justify-content: center;
-    gap: 0.3em;
-    margin: 4px 0 0;
-    font-size: clamp(44px, 5vw, 76px);
+    gap: 0.22em;
+    margin: 0.15em 0 0;
+    font-size: clamp(48px, 5.3vw, 92px);
     line-height: 1;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
 }
 .res-hero__stats-range strong {
-    font-weight: 400;
+    font-weight: 500;
 }
 .res-hero__stats-range span {
-    font-size: 0.4em;
+    font-size: 0.48em;
     font-weight: 400;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     text-transform: uppercase;
 }
 .res-hero__stats-note {
-    margin: 14px 0 0;
-    font-size: var(--fs-small);
+    margin: 0.9em 0 0;
+    font-size: clamp(15px, 1.3vw, 22px);
     letter-spacing: 0.12em;
+    color: var(--black-color);
 }
 .res-hero__dot {
     position: absolute;
     z-index: -1;
-    width: clamp(22px, 2.4vw, 34px);
-    height: clamp(22px, 2.4vw, 34px);
+    width: clamp(26px, 3.1vw, 56px);
+    height: clamp(26px, 3.1vw, 56px);
     border-radius: 50%;
-    background: var(--res-blue);
+    background: var(--accent-soft);
     opacity: 0.9;
 }
+/* Above "TO" of APARTAMENTOS */
 .res-hero__dot--1 {
-    top: -0.5em;
-    left: 38%;
+    top: calc(-1 * clamp(14px, 1.7vw, 30px));
+    left: 51%;
 }
+/* Right of DESDE, clear of the text */
 .res-hero__dot--2 {
-    top: 0;
-    right: -0.6em;
+    top: 0.1em;
+    right: calc(-1 * clamp(34px, 4vw, 72px));
 }
+/* Behind the first figure, lower left */
 .res-hero__dot--3 {
-    top: 48%;
-    left: -0.7em;
+    top: 52%;
+    left: calc(-1 * clamp(4px, 0.8vw, 14px));
 }
 @keyframes res-hero-in {
     from {
@@ -619,6 +697,13 @@ a.mode-pill.is-active:hover .mode-pill__dot {
     .res-hero__stats {
         animation: none;
     }
+}
+
+/* Landing pages: thin line under the header, as in their designs */
+.theme-residencial .site-header__inner,
+.theme-hotelero .site-header__inner,
+.theme-senior .site-header__inner {
+    border-bottom: 1px solid var(--black-color);
 }
 
 .intro {
@@ -842,27 +927,31 @@ select.intro__field {
 .intro__checkbox {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
+    justify-content: flex-start;
+    gap: 12px;
+    /* The whole row is clickable and at least 44px tall (touch target) */
+    min-height: 44px;
     margin: 8px 0 12px;
     font-size: 14px;
+    text-align: left;
     cursor: pointer;
 }
 .intro__checkbox input[type="checkbox"] {
     flex: none;
     appearance: none;
     -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
+    width: 24px;
+    height: 24px;
     margin: 0;
     border: 2px solid var(--metro-green);
     border-radius: 50%;
     background: #fff;
     cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 .intro__checkbox input[type="checkbox"]:checked {
     background: var(--metro-green);
-    box-shadow: inset 0 0 0 2px #fff;
+    box-shadow: inset 0 0 0 4px #fff;
 }
 .intro__checkbox input[type="checkbox"]:focus-visible {
     outline: 2px solid var(--metro-purple);
@@ -1902,7 +1991,6 @@ select.intro__field {
    Metro track with one stretch per type: the active stretch turns light
    blue. The track runs edge to edge; its ends curve off-screen. */
 .tipos {
-    --track: #2f2d2c;
     --track-w: 10px;
     --track-y: 43px; /* line center inside the 72px-tall track */
     position: relative;
@@ -1932,7 +2020,7 @@ select.intro__field {
     max-width: 11px;
     max-height: 11px;
     border-radius: 50%;
-    background: var(--metro-blue);
+    background: var(--accent);
 }
 .tipos__word--dot-tl::before {
     top: 0.02em;
@@ -2006,9 +2094,11 @@ select.intro__field {
     }
 }
 
+/* One equal stretch per type, however many there are (3 or 4) */
 .tipos__stops {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
 }
 .tipos__stop {
     position: relative;
@@ -2043,10 +2133,10 @@ select.intro__field {
     background: #55524f;
 }
 .tipos__stop.is-active .tipos__bar {
-    background: var(--metro-blue);
+    background: var(--accent);
 }
 .tipos__stop:focus-visible {
-    outline: 2px solid var(--metro-blue);
+    outline: 2px solid var(--accent);
     outline-offset: 4px;
     border-radius: 6px;
 }
@@ -2139,7 +2229,7 @@ select.intro__field {
     border-left-color: rgba(35, 33, 32, 0.5);
 }
 .tipos .typology-specs__value {
-    color: rgba(35, 33, 32, 0.55);
+    color: var(--spec-value);
 }
 @media (max-width: 640px) {
     .tipos__label {
