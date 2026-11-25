@@ -11,7 +11,7 @@
       rel="stylesheet"
     />
     <link
-      href="./css/main.css?v=20260922"
+      href="./css/main.css?v=20261126"
       rel="stylesheet"
     />
     <link
@@ -53,7 +53,7 @@
     />
     <link
       rel="canonical"
-      href="https://arconstrucciones.com"
+      href="https://estacion-77.netlify.app/senior.html"
     />
 
     <meta
@@ -70,7 +70,7 @@
     />
     <meta
       property="og:url"
-      content="https://arconstrucciones.com"
+      content="https://estacion-77.netlify.app/senior.html"
     />
     <meta
       property="og:site_name"
@@ -82,11 +82,11 @@
     />
     <meta
       property="og:image"
-      content="https://arconstrucciones.com/img/og-estacion-77.jpg"
+      content="https://estacion-77.netlify.app/img/og-estacion-77.jpg"
     />
     <meta
       property="og:image:secure_url"
-      content="https://arconstrucciones.com/img/og-estacion-77.jpg"
+      content="https://estacion-77.netlify.app/img/og-estacion-77.jpg"
     />
     <meta
       property="og:image:type"
@@ -119,7 +119,7 @@
     />
     <meta
       name="twitter:image"
-      content="https://arconstrucciones.com/img/og-estacion-77.jpg"
+      content="https://estacion-77.netlify.app/img/og-estacion-77.jpg"
     />
     <meta
       name="twitter:image:alt"
@@ -174,7 +174,49 @@
           src="./img/logo-metro-medellin.png"
           alt="Negocios Metro de Medellín"
         />
+        <button
+          class="site-header__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="menu-movil"
+          aria-label="Abrir menú"
+          data-menu-toggle
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
+      <nav
+        class="site-header__mobile"
+        id="menu-movil"
+        aria-label="Proyectos"
+        data-menu
+        hidden
+      >
+          <a
+            class="mode-pill mode-pill--residencial"
+            href="residencial.html"
+          >
+            <span class="mode-pill__dot"></span>
+            Residencial
+          </a>
+          <a
+            class="mode-pill mode-pill--hotelero"
+            href="hotelero.html"
+          >
+            <span class="mode-pill__dot"></span>
+            Hotelero
+          </a>
+          <a
+            class="mode-pill mode-pill--senior is-active"
+            href="senior.html"
+            aria-current="page"
+          >
+            <span class="mode-pill__dot"></span>
+            Senior
+          </a>
+        </nav>
     </header>
     <main>
       <!-- Hero: Senior (colors from body.theme-senior) -->
@@ -268,7 +310,7 @@
                 <span class="intro__title-highlight">
                   <strong>43</strong>
                   hasta
-                  <strong>98 m2</strong>
+                  <strong>98 m²</strong>
                 </span>
               </h3>
               <p
@@ -281,10 +323,19 @@
                 class="intro__description"
                 data-reveal
               >
-                En este macroproyecto de 30 pisos, el componente senior ofrece
-                apartamentos de 43 a 98 m² construidos, pensados para vivir esta
-                etapa con autonomía, acompañados de servicios, salud,
-                entretenimiento y espacios para compartir con amigos y familia.
+                Estación 77 Senior redefine el concepto de Senior Living en Envigado con una propuesta pensada para vivir con independencia, bienestar y tranquilidad. Ubicado en Ciudad Peldar y conectado directamente al Metro, permite estar cerca de la familia, los amigos y de todo aquello que hace la vida más cómoda y agradable.
+              </p>
+              <p
+                class="intro__description"
+                data-reveal
+              >
+                Más que un proyecto de Senior Living en Medellín es la oportunidad de ser parte de una comunidad diseñada para brindar confianza, acompañamiento y calidad de vida. Porque vivir aquí es a pasos de todo: nietos, tus amigos, tus amigos y tu nuevo estilo de vida.
+              </p>
+              <p
+                class="intro__description"
+                data-reveal
+              >
+                Si buscas un apartamento Senior en Envigado, regístrate y descubre por qué Estación 77 Senior puede ser el lugar ideal para disfrutar de la mejor etapa de tu vida.
               </p>
             </div>
             <div class="col-span-1 lg:col-span-5">
@@ -333,8 +384,9 @@
                       required
                       autocomplete="tel"
                       inputmode="tel"
-                      pattern="[0-9 +()-]{7,}"
-                      title="Escribe un número de teléfono válido"
+                      pattern="[0-9]{10}"
+                      maxlength="10"
+                      title="Escribe un número de 10 dígitos, solo números"
                       placeholder="Teléfono / Celular*"
                       aria-label="Teléfono o celular"
                     />
@@ -395,23 +447,15 @@
                       <option value="En mas de 6 meses">En más de 6 meses</option>
                     </select>
 
-                    <label class="intro__checkbox">
-                      <input
-                        type="checkbox"
-                        id="subscribe"
-                        name="tyc"
-                        required
-                      />
-                      <span>
-                        Acepto los
-                        <a
-                          class="intro__terms-link"
-                          href="#"
-                        >
-                          términos y condiciones
-                        </a>*
-                      </span>
-                    </label>
+                    <p class="intro__consent">
+                      Al hacer click en el botón “Enviar”, declaras que has
+                      leído y aceptas nuestra
+                      <a
+                        href="https://storeproyectoar.blob.core.windows.net/ar-multimedia-resources-container/CLAUSULA-DE-CONSENTIMIENTO.pdf"
+                        target="_blank"
+                        rel="noopener"
+                      >Clausula de Consentimiento Web</a>
+                    </p>
 
                     <button
                       class="intro__submit"
@@ -2312,7 +2356,7 @@
               <div class="ubicacion__links">
                 <a
                   class="ubicacion__link"
-                  href="https://waze.com/ul?q=Estaci%C3%B3n%2077%20Ciudad%20Peldar%20Envigado&navigate=yes"
+                  href="https://ul.waze.com/ul?place=ChIJBXj1fciDRo4Rqu2W7JPg4T8&amp;ll=6.17395760%2C-75.59655430&amp;navigate=yes&amp;utm_campaign=live_map&amp;utm_source=waze_website&amp;utm_medium=lm_share_location"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -2423,21 +2467,14 @@
           <div>
             <h4 class="site-footer__heading">Contáctanos</h4>
             <p class="site-footer__text">313 253 92 29 y 313 253 91 93</p>
-            <p class="site-footer__text">MiQuintero@arconstrucciones.com</p>
           </div>
           <div>
             <h4 class="site-footer__heading">Sala de ventas</h4>
-            <p class="site-footer__text">
-              Ciudad Peldar, Sobre la Av. Regional.
-            </p>
-            <p class="site-footer__text">Envigado, Antioquia</p>
+            <p class="site-footer__text">Carrera 49 # 38 sur, Ciudad Peldar, Envigado</p>
           </div>
           <div>
             <h4 class="site-footer__heading">Horario</h4>
-            <p class="site-footer__text">
-              Lunes a sábado: 9:00 a.m. a 5:00 p.m.
-            </p>
-            <p class="site-footer__text">Domingos: 9:00 a.m. a 5:00 p.m.</p>
+            <p class="site-footer__text">Lunes a domingo de 9:00 am a 5:00 pm</p>
           </div>
         </div>
 
@@ -2449,24 +2486,21 @@
       </div>
 
       <div class="site-footer__tags">
-        <div class="container mx-auto flex justify-between px-6 md:px-8">
+        <div class="site-footer__tags-inner container mx-auto px-6 md:px-8">
           <span class="site-footer__tag">
             ESTACIÓN
             <em>77</em>
             - CIUDAD PELDAR.
           </span>
-          <span class="site-footer__tag site-footer__tag--active">
-            <span class="site-footer__tag-dot"></span>
-            Hogar
-          </span>
-          <span class="site-footer__tag">Comercio</span>
-          <span class="site-footer__tag">Movilidad</span>
+          <span class="site-footer__tag">Residencial</span>
+          <span class="site-footer__tag">Hotelero</span>
+          <span class="site-footer__tag">Senior</span>
         </div>
       </div>
     </footer>
     <a
       class="whatsapp-float"
-      href="https://wa.me/573132539229?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Estaci%C3%B3n%2077"
+      href="https://wa.me/573132539229?text=Hola%2C%20estoy%20viendo%20la%20*Landing%20Page*%20de%20Estaci%C3%B3n%2077%20y%20me%20gustar%C3%ADa%20hablar%20con%20un%20asesor."
       target="_blank"
       rel="noopener"
       aria-label="Contáctanos por WhatsApp"
@@ -2490,6 +2524,8 @@
       </span>
     </a>
 
+    <script src="./js/mobile-menu.js?v=20261126"></script>
+
     <script src="./js/hero-window.js?v=20260922"></script>
     <script src="./js/hero-parallax.js?v=20260922"></script>
     <script src="./js/hero-split-flap.js?v=20260922"></script>
@@ -2501,5 +2537,6 @@
     <script src="./js/typology-tabs.js?v=20260922"></script>
     <script src="./js/floorplan-zoom.js?v=20260922"></script>
     <script src="./js/smooth-anchors.js?v=20260922"></script>
+    <script src="./js/lead-form.js?v=20261125"></script>
   </body>
 </html>

@@ -55,13 +55,39 @@
     font-style: normal;
     font-display: swap;
 }
+/* Helvetica Now Display: titles and body texts, as in the design PDF
+   (no Light file: weight 300 falls back to Regular, like the design). */
+@font-face {
+    font-family: "Helvetica Now Display";
+    src: url("../fonts/HelveticaNowDisplay-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Helvetica Now Display";
+    src: url("../fonts/HelveticaNowDisplay-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Helvetica Now Display";
+    src: url("../fonts/HelveticaNowDisplay-Bold.ttf") format("truetype");
+    font-weight: 600 900;
+    font-style: normal;
+    font-display: swap;
+}
 :root {
     --bg-primary: #dfdad5;
     --bg-secondary: #bee3ee;
     --font-led: "Fanfare Ticker", monospace;
+    /* Neue Haas: menu pills, form, tabs, spec labels and footer (as in the PDF) */
     --font-principal: "Neue Haas Display", Arial, sans-serif;
-    --red-color: #e7392f;
-    --darkred-color: #dd180d;
+    --font-display: "Helvetica Now Display", "Neue Haas Display", Arial, sans-serif;
+    /* Red from the design PDF (a bit darker than before) */
+    --red-color: #c83c33;
+    --darkred-color: #a8302a;
     --black-color: #232120;
     --light-blue-color: #bee3ee;
     /* Metro line colors (Residencial / Hotelero / Senior) */
@@ -108,11 +134,18 @@
 .theme-senior {
     --accent: var(--metro-green);
     --accent-soft: var(--metro-green);
-    --accent-ink: #00855a; /* slightly deeper green so text stays readable */
+    --accent-ink: #004439; /* text green from the design PDF */
     --hero-fade-mid: #d3e1da;
     --hero-fade: #3fb487;
     --track: #0f3a32;
-    --spec-value: #4f9c80;
+    --spec-value: #00a174; /* spec figures green from the design PDF */
+}
+/* Texts that keep Neue Haas Display in the design */
+.intro__form,
+.intro__description,
+.site-footer,
+.typology-specs__label {
+    font-family: var(--font-principal);
 }
 /* Living-mode pages: the gallery title dots take the page color */
 .theme-residencial .typology__title-dot,
@@ -126,7 +159,7 @@ html {
 }
 body {
     background: var(--bg-primary);
-    font-family: var(--font-principal);
+    font-family: var(--font-display);
     font-weight: 400;
     padding: 0;
     margin: 0;
@@ -168,6 +201,94 @@ body {
 @media (min-width: 1200px) {
     .site-header__nav {
         display: flex;
+    }
+}
+/* ===== Hamburger menu (below 1200px, js/mobile-menu.js) ===== */
+.site-header__toggle {
+    flex: none;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    margin: -6px -6px -6px 0;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+    animation: header-logo-right 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+.site-header__toggle span {
+    display: block;
+    width: 26px;
+    height: 2.5px;
+    border-radius: 2px;
+    background: var(--black-color);
+    transition: transform 0.3s ease, opacity 0.2s ease;
+}
+.site-header__toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+}
+.site-header__toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+.site-header__toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+}
+.site-header__toggle:focus-visible {
+    outline: 2px solid var(--black-color);
+    outline-offset: 2px;
+}
+/* Metro logo moves next to the toggle (the pills nav is hidden here) */
+.site-header__logo--metro {
+    margin-left: auto;
+}
+.site-header__mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 20px 24px 28px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--black-color);
+    box-shadow: 0 18px 30px -18px rgba(35, 33, 32, 0.35);
+    animation: mobile-menu-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.site-header__mobile[hidden] {
+    display: none;
+}
+.site-header__mobile .mode-pill {
+    justify-content: center;
+    font-size: 16px;
+    padding: 0.9em 1.4em;
+}
+@keyframes mobile-menu-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+@media (min-width: 1200px) {
+    .site-header__toggle,
+    .site-header__mobile {
+        display: none !important;
+    }
+    .site-header__logo--metro {
+        margin-left: 0;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .site-header__mobile,
+    .site-header__toggle span {
+        animation: none;
+        transition: none;
     }
 }
 @keyframes header-nav-in {
@@ -319,25 +440,11 @@ body {
         width: min(90%, 520px);
     }
 }
+/* Logo + "Residencial · Hotelero · Senior" are one image (from the design PDF) */
 .hero-banner__logo-img {
     display: block;
     width: 100%;
     height: auto;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 86% 100%, 86% 88%, 0 88%);
-}
-.hero-banner__logo-tagline {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    margin: 0;
-    font-family: var(--font-principal);
-    font-weight: 500;
-    font-size: 2.35cqw;
-    line-height: 1;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    color: var(--black-color);
 }
 .hero-banner__h2 {
     margin: clamp(40px, 5vw, 64px) 0 clamp(32px, 3.5vw, 48px);
@@ -651,6 +758,14 @@ a.mode-pill--senior.is-active:hover .mode-pill__dot {
     letter-spacing: 0.01em;
     text-transform: uppercase;
 }
+/* Hotelero: "+ Balcón" under the figures */
+.res-hero__stats-plus {
+    margin: 0.2em 0 0;
+    font-size: clamp(23px, 2.55vw, 44px);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
 .res-hero__stats-note {
     margin: 0.9em 0 0;
     font-size: clamp(15px, 1.3vw, 22px);
@@ -818,6 +933,14 @@ a.mode-pill--senior.is-active:hover .mode-pill__dot {
     letter-spacing: 0.04em;
 }
 
+.intro__description + .intro__description {
+    margin-top: 1em;
+}
+/* Hotelero: "+ Balcón" after the intro figures */
+.intro__title-plus {
+    font-size: 0.6em;
+    white-space: nowrap;
+}
 .intro__description {
     max-width: 520px;
     overflow-wrap: break-word;
@@ -981,6 +1104,155 @@ select.intro__field {
 }
 .intro__submit:hover {
     opacity: 0.85;
+}
+.intro__submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+/* Consent note (replaces the terms checkbox) */
+.intro__consent {
+    margin: 8px 0 14px;
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: left;
+    color: var(--black-color);
+}
+.intro__consent a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+}
+/* Error / sending message under the button (js/lead-form.js) */
+.intro__form-status {
+    margin: 10px 0 0;
+    color: var(--darkred-color);
+    font-size: var(--fs-small);
+    line-height: 1.4;
+}
+
+/* ===== Thank-you pages (gracias-*.html) =====
+   Same hero language as the landing: beige fading into the mode color,
+   mode title with its dot, the 3D window image and an animated metro band. */
+.thanks {
+    position: relative;
+    overflow: hidden;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    padding: 160px 0 clamp(56px, 6vw, 110px);
+    background: linear-gradient(
+        to bottom,
+        var(--bg-primary) 0%,
+        var(--bg-primary) 50%,
+        var(--hero-fade-mid) 70%,
+        var(--hero-fade) 100%
+    );
+}
+@media (max-width: 640px) {
+    .thanks {
+        padding-top: 96px;
+    }
+}
+.thanks__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 32px;
+    align-items: center;
+}
+@media (min-width: 1024px) {
+    .thanks__inner {
+        grid-template-columns: minmax(0, 48fr) minmax(0, 52fr);
+        column-gap: clamp(40px, 6vw, 110px);
+    }
+}
+.thanks__content {
+    animation: res-hero-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+.thanks .res-hero__title {
+    animation: none;
+}
+.thanks__claim {
+    margin: clamp(24px, 3vw, 40px) 0 0;
+    font-size: clamp(34px, 4vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--accent-ink);
+}
+.thanks__claim strong {
+    display: block;
+    font-weight: 700;
+}
+.thanks__text {
+    max-width: 30em;
+    margin: 20px 0 0;
+    color: var(--black-color);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+}
+.thanks__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+}
+.thanks__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 26px;
+    border: 2px solid var(--black-color);
+    border-radius: 999px;
+    color: var(--black-color);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+.thanks__btn:hover,
+.thanks__btn:focus-visible {
+    background: var(--black-color);
+    color: #fff;
+}
+.thanks__btn--primary {
+    background: var(--black-color);
+    color: #fff;
+}
+.thanks__btn--primary:hover,
+.thanks__btn--primary:focus-visible {
+    background: transparent;
+    color: var(--black-color);
+}
+.thanks__band {
+    height: 10px;
+    margin-top: 40px;
+    max-width: 360px;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        var(--metro-green),
+        var(--metro-purple),
+        var(--metro-blue),
+        var(--metro-purple),
+        var(--metro-green)
+    );
+    background-size: 200% 100%;
+    animation: thanks-band 4s linear infinite;
+}
+@keyframes thanks-band {
+    to {
+        background-position: -200% 0;
+    }
+}
+.thanks .res-hero__media {
+    grid-area: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+    .thanks__content,
+    .thanks__band {
+        animation: none;
+    }
 }
 
 .intro__features {
@@ -2235,6 +2507,11 @@ select.intro__field {
 }
 .tipos .typology-specs__value {
     color: var(--spec-value);
+    font-size: clamp(22px, 2vw, 30px);
+}
+/* Residencial: bigger tab names (TIPO 1 Y 1A, TIPO 2, TIPO 3) */
+.theme-residencial .tipos__label {
+    font-size: clamp(12px, 1.15vw, 17px);
 }
 /* Second, smaller line under a value (e.g. "+ Balcón") */
 .typology-specs__extra {
@@ -2271,7 +2548,7 @@ select.intro__field {
     align-items: center;
     width: 100%;
     box-sizing: border-box;
-    background: var(--red-color);
+    background: var(--black-color); /* gray bar from the design PDF (was red) */
     color: #fff;
     font-weight: 500;
     font-size: clamp(17px, 1.6vw, 22px);
@@ -2295,9 +2572,9 @@ select.intro__field {
     gap: 14px;
     margin: 12px 0 0 6%;
     color: var(--black-color);
-    font-size: var(--fs-body);
+    font-size: clamp(20px, 1.75vw, 30px);
     font-weight: 400;
-    line-height: var(--lh-body);
+    line-height: 1.25;
 }
 .ubicacion__arrow {
     flex: none;
@@ -2322,7 +2599,7 @@ select.intro__field {
     gap: 10px;
     background: #3e3f44;
     color: #fff;
-    font-family: var(--font-principal);
+    font-family: var(--font-display);
     font-weight: 400;
     font-size: clamp(14px, 1.3vw, 17px);
     padding: 0.95em 0.5em;
@@ -2441,10 +2718,10 @@ select.intro__field {
     gap: 12px;
     padding: 18px 0;
     font-family: var(--font-led);
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(35, 33, 32, 0.55);
+    color: #131112;
 }
 .site-footer__tag {
     display: inline-flex;

@@ -11,7 +11,7 @@
       rel="stylesheet"
     />
     <link
-      href="./css/main.css?v=20260922"
+      href="./css/main.css?v=20261126"
       rel="stylesheet"
     />
     <link
@@ -53,7 +53,7 @@
     />
     <link
       rel="canonical"
-      href="https://arconstrucciones.com"
+      href="https://estacion-77.netlify.app/"
     />
 
     <meta
@@ -70,7 +70,7 @@
     />
     <meta
       property="og:url"
-      content="https://arconstrucciones.com"
+      content="https://estacion-77.netlify.app/"
     />
     <meta
       property="og:site_name"
@@ -82,11 +82,11 @@
     />
     <meta
       property="og:image"
-      content="https://arconstrucciones.com/img/og-estacion-77.jpg"
+      content="https://estacion-77.netlify.app/img/og-estacion-77.jpg"
     />
     <meta
       property="og:image:secure_url"
-      content="https://arconstrucciones.com/img/og-estacion-77.jpg"
+      content="https://estacion-77.netlify.app/img/og-estacion-77.jpg"
     />
     <meta
       property="og:image:type"
@@ -119,7 +119,7 @@
     />
     <meta
       name="twitter:image"
-      content="https://arconstrucciones.com/img/og-estacion-77.jpg"
+      content="https://estacion-77.netlify.app/img/og-estacion-77.jpg"
     />
     <meta
       name="twitter:image:alt"
@@ -173,7 +173,48 @@
           src="./img/logo-metro-medellin.png"
           alt="Negocios Metro de Medellín"
         />
+        <button
+          class="site-header__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="menu-movil"
+          aria-label="Abrir menú"
+          data-menu-toggle
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
+      <nav
+        class="site-header__mobile"
+        id="menu-movil"
+        aria-label="Proyectos"
+        data-menu
+        hidden
+      >
+          <a
+            class="mode-pill mode-pill--residencial"
+            href="residencial.html"
+          >
+            <span class="mode-pill__dot"></span>
+            Residencial
+          </a>
+          <a
+            class="mode-pill mode-pill--hotelero"
+            href="hotelero.html"
+          >
+            <span class="mode-pill__dot"></span>
+            Hotelero
+          </a>
+          <a
+            class="mode-pill mode-pill--senior"
+            href="senior.html"
+          >
+            <span class="mode-pill__dot"></span>
+            Senior
+          </a>
+        </nav>
     </header>
     <main>
       <section class="hero-banner">
@@ -226,13 +267,11 @@
             <div class="hero-banner__logo-estacion">
               <img
                 class="hero-banner__logo-img"
-                src="./img/logo-estacion-77.png"
-                alt="Estación 77 - Ciudad Peldar"
+                src="./img/logo-estacion-77-hero.png"
+                width="1200"
+                height="333"
+                alt="Estación 77 Ciudad Peldar - Residencial, Hotelero, Senior"
               />
-              <p class="hero-banner__logo-tagline">
-                Residencial <span aria-hidden="true">•</span> Hotelero
-                <span aria-hidden="true">•</span> Senior
-              </p>
             </div>
             <h2
               class="hero-banner__h2 text-center"
@@ -308,7 +347,7 @@
                   áreas desde
                 </span>
                 <span class="intro__title-highlight">
-                  <strong>29</strong> hasta <strong>105 m2</strong>
+                  <strong>29.5</strong> hasta <strong>105 m²</strong>
                 </span>
               </h3>
               <p
@@ -334,7 +373,7 @@
                 id="registro"
                 data-reveal
               >
-                <form class="intro__form">
+                <form class="intro__form" data-proyecto="Residencial">
                   <h3 class="intro__form-title">CONOCE ESTACIÓN 77</h3>
                   <fieldset class="intro__fieldset">
                     <legend class="intro__form-legend">
@@ -374,44 +413,12 @@
                       required
                       autocomplete="tel"
                       inputmode="tel"
-                      pattern="[0-9 +()-]{7,}"
-                      title="Escribe un número de teléfono válido"
+                      pattern="[0-9]{10}"
+                      maxlength="10"
+                      title="Escribe un número de 10 dígitos, solo números"
                       placeholder="Teléfono / Celular*"
                       aria-label="Teléfono o celular"
                     />
-
-                    <select
-                      class="intro__field"
-                      id="apartamento"
-                      name="apartamento"
-                      aria-label="Me interesa un apartamento"
-                      required
-                    >
-                      <option
-                        value=""
-                        disabled
-                        selected
-                      >
-                        Me interesa un Apartamento:*
-                      </option>
-                      <optgroup label="RESIDENCIAL DE 69.5 m² A 105 m²">
-                        <option value="Residencial de 69.5 m2">Residencial de 69.5 m²</option>
-                        <option value="Residencial de 72.5 m2">Residencial de 72.5 m²</option>
-                        <option value="Residencial de 91 m2">Residencial de 91 m²</option>
-                        <option value="Residencial de 105 m2">Residencial de 105 m²</option>
-                      </optgroup>
-                      <optgroup label="HOTELERO DE 29.5 m² A 60.5 m²">
-                        <option value="Hotelero de 29.5 m2 + Balcon">Hotelero de 29.5 m² + Balcón</option>
-                        <option value="Hotelero de 42.5 m2 + Balcon">Hotelero de 42.5 m² + Balcón</option>
-                        <option value="Hotelero de 60.5 m2 + Balcon">Hotelero de 60.5 m² + Balcón</option>
-                      </optgroup>
-                      <optgroup label="SENIOR DE 43 m² A 98 m²">
-                        <option value="Senior de 43 m2">Senior de 43 m²</option>
-                        <option value="Senior de 68 m2">Senior de 68 m²</option>
-                        <option value="Senior de 96 m2">Senior de 96 m²</option>
-                        <option value="Senior de 98 m2">Senior de 98 m²</option>
-                      </optgroup>
-                    </select>
                     <select
                       class="intro__field"
                       id="proposito"
@@ -449,23 +456,15 @@
                       <option value="En mas de 6 meses">En más de 6 meses</option>
                     </select>
 
-                    <label class="intro__checkbox">
-                      <input
-                        type="checkbox"
-                        id="subscribe"
-                        name="tyc"
-                        required
-                      />
-                      <span>
-                        Acepto los
-                        <a
-                          class="intro__terms-link"
-                          href="#"
-                        >
-                          términos y condiciones
-                        </a>*
-                      </span>
-                    </label>
+                    <p class="intro__consent">
+                      Al hacer click en el botón “Enviar”, declaras que has
+                      leído y aceptas nuestra
+                      <a
+                        href="https://storeproyectoar.blob.core.windows.net/ar-multimedia-resources-container/CLAUSULA-DE-CONSENTIMIENTO.pdf"
+                        target="_blank"
+                        rel="noopener"
+                      >Clausula de Consentimiento Web</a>
+                    </p>
 
                     <button
                       class="intro__submit"
@@ -2092,7 +2091,7 @@
               <div class="ubicacion__links">
                 <a
                   class="ubicacion__link"
-                  href="https://waze.com/ul?q=Estaci%C3%B3n%2077%20Ciudad%20Peldar%20Envigado&navigate=yes"
+                  href="https://ul.waze.com/ul?place=ChIJBXj1fciDRo4Rqu2W7JPg4T8&amp;ll=6.17395760%2C-75.59655430&amp;navigate=yes&amp;utm_campaign=live_map&amp;utm_source=waze_website&amp;utm_medium=lm_share_location"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -2203,21 +2202,14 @@
           <div>
             <h4 class="site-footer__heading">Contáctanos</h4>
             <p class="site-footer__text">313 253 92 29 y 313 253 91 93</p>
-            <p class="site-footer__text">MiQuintero@arconstrucciones.com</p>
           </div>
           <div>
             <h4 class="site-footer__heading">Sala de ventas</h4>
-            <p class="site-footer__text">
-              Ciudad Peldar, Sobre la Av. Regional.
-            </p>
-            <p class="site-footer__text">Envigado, Antioquia</p>
+            <p class="site-footer__text">Carrera 49 # 38 sur, Ciudad Peldar, Envigado</p>
           </div>
           <div>
             <h4 class="site-footer__heading">Horario</h4>
-            <p class="site-footer__text">
-              Lunes a sábado: 9:00 a.m. a 5:00 p.m.
-            </p>
-            <p class="site-footer__text">Domingos: 9:00 a.m. a 5:00 p.m.</p>
+            <p class="site-footer__text">Lunes a domingo de 9:00 am a 5:00 pm</p>
           </div>
         </div>
 
@@ -2229,24 +2221,21 @@
       </div>
 
       <div class="site-footer__tags">
-        <div class="container mx-auto flex justify-between px-6 md:px-8">
+        <div class="site-footer__tags-inner container mx-auto px-6 md:px-8">
           <span class="site-footer__tag">
             ESTACIÓN
             <em>77</em>
             - CIUDAD PELDAR.
           </span>
-          <span class="site-footer__tag site-footer__tag--active">
-            <span class="site-footer__tag-dot"></span>
-            Hogar
-          </span>
-          <span class="site-footer__tag">Comercio</span>
-          <span class="site-footer__tag">Movilidad</span>
+          <span class="site-footer__tag">Residencial</span>
+          <span class="site-footer__tag">Hotelero</span>
+          <span class="site-footer__tag">Senior</span>
         </div>
       </div>
     </footer>
     <a
       class="whatsapp-float"
-      href="https://wa.me/573132539229?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Estaci%C3%B3n%2077"
+      href="https://wa.me/573132539229?text=Hola%2C%20estoy%20viendo%20la%20*Landing%20Page*%20de%20Estaci%C3%B3n%2077%20y%20me%20gustar%C3%ADa%20hablar%20con%20un%20asesor."
       target="_blank"
       rel="noopener"
       aria-label="Contáctanos por WhatsApp"
@@ -2270,6 +2259,8 @@
       </span>
     </a>
 
+    <script src="./js/mobile-menu.js?v=20261126"></script>
+
     <script src="./js/hero-window.js?v=20260922"></script>
     <script src="./js/hero-parallax.js?v=20260922"></script>
     <script src="./js/hero-split-flap.js?v=20260922"></script>
@@ -2281,5 +2272,6 @@
     <script src="./js/typology-tabs.js?v=20260922"></script>
     <script src="./js/floorplan-zoom.js?v=20260922"></script>
     <script src="./js/smooth-anchors.js?v=20260922"></script>
+    <script src="./js/lead-form.js?v=20261125"></script>
   </body>
 </html>
