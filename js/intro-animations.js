@@ -4,108 +4,63 @@
 
   const ENTRANCE_DURATION = 500;
   const STAGGER = 60;
-  const SCROLL_EASE = 0.15;
 
   function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 3);
   }
 
-  // Background arrow: pure continuous parallax, no entrance reveal.
+  // Background arrow: parallax tied directly to the scroll position (no
+  // easing lag), so nothing keeps drifting once the page stops scrolling.
   const arrow = section.querySelector(".intro__bg-indicator");
   const ARROW_FACTOR = 0.18;
 
-  // Foreground content: staggered fade/rise reveal on first view, plus its
-  // own (subtler) parallax factor once visible — closer layers drift less.
-  const LAYER_FACTORS = {
-    "intro__title": 0.08,
-    "intro__subtitle": 0.08,
-    "intro__description": 0.08,
-    "intro__content-form": 0.06,
-    "intro__feature": 0.05,
-  };
+  function updateArrow() {
+    if (!arrow) return;
+    const offset = -section.getBoundingClientRect().top;
+    arrow.style.transform = "translateY(" + (offset * ARROW_FACTOR).toFixed(1) + "px)";
+  }
 
-  function factorFor(el) {
-    for (const cls in LAYER_FACTORS) {
-      if (el.classList.contains(cls)) return LAYER_FACTORS[cls];
+  let ticking = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateArrow();
+        ticking = false;
+      });
+    },
+    { passive: true }
+  );
+  updateArrow();
+
+  // Foreground content (texts, form, features): a one-time staggered
+  // fade/rise when the section first comes into view. No scroll parallax,
+  // so the form stays still while people read or fill it in.
+  const items = Array.from(section.querySelectorAll("[data-reveal]"));
+  if (!items.length) return;
+
+  function reveal(el) {
+    let start = null;
+    function frame(now) {
+      if (start === null) start = now;
+      const progress = Math.min(1, (now - start) / ENTRANCE_DURATION);
+      const ease = easeOutCubic(progress);
+      el.style.opacity = ease.toFixed(3);
+      el.style.transform = progress < 1 ? "translateY(" + ((1 - ease) * 28).toFixed(2) + "px)" : "none";
+      if (progress < 1) requestAnimationFrame(frame);
     }
-    return 0.06;
+    requestAnimationFrame(frame);
   }
 
-  const items = Array.from(section.querySelectorAll("[data-reveal]")).map((el, i) => ({
-    el,
-    factor: factorFor(el),
-    triggerAt: i * STAGGER,
-    triggered: false,
-    start: null,
-    done: false,
-  }));
-
-  let targetOffset = 0;
-  let currentOffset = 0;
-  let raf = null;
-
-  function updateScrollTarget() {
-    const rect = section.getBoundingClientRect();
-    targetOffset = -rect.top;
-    if (!raf) raf = requestAnimationFrame(render);
-  }
-
-  function render(now) {
-    now = now || performance.now();
-    let stillAnimating = false;
-
-    currentOffset += (targetOffset - currentOffset) * SCROLL_EASE;
-    if (Math.abs(targetOffset - currentOffset) > 0.5) stillAnimating = true;
-
-    if (arrow) {
-      arrow.style.transform = "translateY(" + (currentOffset * ARROW_FACTOR).toFixed(1) + "px)";
-    }
-
-    items.forEach((item) => {
-      if (!item.triggered) return;
-      if (item.start === null) item.start = now;
-
-      let ease = 1;
-      if (!item.done) {
-        const progress = Math.min(1, (now - item.start) / ENTRANCE_DURATION);
-        ease = easeOutCubic(progress);
-        if (progress < 1) stillAnimating = true;
-        else item.done = true;
-      }
-
-      const entranceTY = (1 - ease) * 28;
-      const parallaxTY = currentOffset * item.factor;
-      item.el.style.opacity = ease.toFixed(3);
-      item.el.style.transform = "translateY(" + (entranceTY + parallaxTY).toFixed(2) + "px)";
-    });
-
-    if (stillAnimating) {
-      raf = requestAnimationFrame(render);
-    } else {
-      raf = null;
-    }
-  }
-
-  window.addEventListener("scroll", updateScrollTarget, { passive: true });
-
-  if (items.length) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          items.forEach((item) => {
-            setTimeout(() => {
-              item.triggered = true;
-              if (!raf) raf = requestAnimationFrame(render);
-            }, item.triggerAt);
-          });
-          observer.disconnect();
-        });
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(section);
-  }
-
-  raf = requestAnimationFrame(render);
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      items.forEach((el, i) => setTimeout(() => reveal(el), i * STAGGER));
+      observer.disconnect();
+    },
+    { threshold: 0.1 }
+  );
+  observer.observe(section);
 })();
