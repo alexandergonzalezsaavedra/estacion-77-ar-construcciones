@@ -2211,6 +2211,11 @@ select.intro__field {
         grid-template-columns: 2fr 3fr;
         gap: clamp(24px, 3vw, 48px);
     }
+    /* Hotelero / Senior: floor plan and apartment plan share the width 50/50 */
+    .theme-hotelero .tipos .typology-detail > .grid,
+    .theme-senior .tipos .typology-detail > .grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 .tipos .typology-detail__floorplan {
     border-radius: 0;
@@ -2230,6 +2235,12 @@ select.intro__field {
 }
 .tipos .typology-specs__value {
     color: var(--spec-value);
+}
+/* Second, smaller line under a value (e.g. "+ Balcón") */
+.typology-specs__extra {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.75em;
 }
 @media (max-width: 640px) {
     .tipos__label {
